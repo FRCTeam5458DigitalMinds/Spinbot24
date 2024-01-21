@@ -36,6 +36,9 @@ import frc.robot.Robot;
 import frc.robot.Constants.SwerveConstants;
 import java.io.IOException;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 
 public class RobotContainer {
 
@@ -44,20 +47,14 @@ public class RobotContainer {
 
   //private final CommandJoystick m_JoystickL = new CommandJoystick(0);
   //private final CommandJoystick m_JoystickR = new CommandJoystick(1);
-
-  //path planner sendable chooser
-  public static final String m_testauto = "Default";
-  public static final String m_auto1 = "Four Note Auto";
-
   //side sendable chooser
   public static final String m_blue = "Blue";
   public static final String m_red = "Red";
 
-  public String m_autoSelected;
   public String m_sideChosen;
   public int m_numYPressed;
 
-  public final SendableChooser<String> m_chooser = new SendableChooser<>();
+  public SendableChooser<Command> m_chooser = new SendableChooser<>();
   public final SendableChooser<String> m_side_chooser = new SendableChooser<>();
 
   /* Drive Controls */
@@ -85,12 +82,12 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
-    m_chooser.setDefaultOption("Test Path", m_testauto);
-    m_chooser.addOption("Four Note Auto", m_auto1);
+    m_chooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Choices", m_chooser);
+
     //blueOrNot.addOption("Red", blueOrNot);
     m_side_chooser.setDefaultOption("Blue", m_blue);
     m_side_chooser.addOption("Red", m_red);
-    SmartDashboard.putData("Auto Choices", m_chooser);
     SmartDashboard.putData("Side", m_side_chooser);
 
     m_SwerveSubsystem.setDefaultCommand(
@@ -107,6 +104,7 @@ public class RobotContainer {
     
     // Configure the trigger bindings
     configureBindings();
+    SmartDashboard.putData("Four Note Auto", new PathPlannerAuto("4Note_Auto"));
 
   }
 
@@ -157,20 +155,8 @@ public class RobotContainer {
     }
     public Command getAutonomousCommand() {
       // An ExampleCommand will run in
-      m_autoSelected = m_chooser.getSelected();
-
-
-      switch (m_autoSelected)
-      {
-        //to add an auto, first declare as a string, then add as a smart dash option
-        //make path and make an auto file copying the "PathPlannerExample.java" file
-        //replace the trajectory with your own name of the path planner export
-        //make a case in this string where you return a command beginning a new instance of your auto
-        case m_auto1:
-          return new FourNoteAuto(m_SwerveSubsystem);
-        default:
-          return new PathPlannerExample(m_SwerveSubsystem);
-      }
+    return m_chooser.getSelected();
+      
     }
 
 }
