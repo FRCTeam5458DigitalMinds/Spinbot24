@@ -38,6 +38,7 @@ import frc.robot.Robot;
 import frc.robot.Constants.SwerveConstants;
 import java.io.IOException;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 
 public class RobotContainer {
 
@@ -59,7 +60,7 @@ public class RobotContainer {
   public String m_sideChosen;
   public int m_numYPressed;
 
-  public final SendableChooser<String> m_chooser = new SendableChooser<>();
+  //public final SendableChooser<Command> m_chooser;
   public final SendableChooser<String> m_side_chooser = new SendableChooser<>();
 
   /* Drive Controls */
@@ -87,12 +88,12 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
-    m_chooser.setDefaultOption("Test Path", m_testauto);
-    m_chooser.addOption("Four Note Auto", m_auto1);
-    //blueOrNot.addOption("Red", blueOrNot);
+    //m_chooser = AutoBuilder.buildAutoChooser();
+
     m_side_chooser.setDefaultOption("Blue", m_blue);
     m_side_chooser.addOption("Red", m_red);
-    SmartDashboard.putData("Auto Choices", m_chooser);
+
+    //SmartDashboard.putData("Auto Choices", m_chooser);
     SmartDashboard.putData("Side", m_side_chooser);
 
     m_SwerveSubsystem.setDefaultCommand(
@@ -123,6 +124,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    m_SwerveSubsystem.setWheelsToX();
     m_XboxController.button(Button.kY.value).onTrue(new InstantCommand(() -> m_SwerveSubsystem.zeroGyro()));
     m_XboxController.button(Button.kB.value).onTrue(new InstantCommand(() -> m_SwerveSubsystem.setWheelsToX()));
    // m_XboxController.button(Button.kA.value).onTrue(new InstantCommand(() -> m_Limelight.LimeToDrive()));
@@ -130,6 +132,10 @@ public class RobotContainer {
 
   }
 
+  public void resetWheels()
+  {
+    m_SwerveSubsystem.setWheelsToX();
+  }
   public void Rotation_Snap()
   {
    m_numYPressed += 1;
@@ -157,6 +163,7 @@ public class RobotContainer {
 
       return m_sideChosen;
     }
+
     public Command getAutonomousCommand() {
       // An ExampleCommand will run in
       //m_autoSelected = m_chooser.getSelected();
@@ -167,7 +174,8 @@ public class RobotContainer {
         //make path and make an auto file copying the "PathPlannerExample.java" file
         //replace the trajectory with your own name of the path planner export
         //make a case in this string where you return a command beginning a new instance of your auto
-          return new FourNoteAuto(m_SwerveSubsystem);
+       // return m_chooser.getSelected();
+        return new PathPlannerAuto("sillylittlepath");
       }
     }
 

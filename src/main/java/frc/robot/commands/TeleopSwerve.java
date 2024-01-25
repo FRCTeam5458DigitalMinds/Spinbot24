@@ -82,26 +82,28 @@ public class TeleopSwerve extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-        /* Get Values, applies Deadband, (doesnt do anything if stick is less than a value)*/
-        if (m_strafeSnapPressed.getAsBoolean() == false) {
-          
-    strafeVal =
-        strafeLimiter.calculate(
-            MathUtil.applyDeadband(m_strafeSupplier.getAsDouble(), Constants.SwerveConstants.inputDeadband));
-        }
-        else {
-          double m_y_angleToTagDegrees = Constants.LimelightConstants.m_limelightMountAngleDegree +  NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
-          double m_y_angleToTagRadians = m_y_angleToTagDegrees * (3.14159 / 180.);
+      /* Get Values, applies Deadband, (doesnt do anything if stick is less than a value)*/
+      if (m_strafeSnapPressed.getAsBoolean() == false) {
+        
+      strafeVal =
+          strafeLimiter.calculate(
+              MathUtil.applyDeadband(m_strafeSupplier.getAsDouble(), Constants.SwerveConstants.inputDeadband));
+      }
+      else {
+        double m_y_angleToTagDegrees = Constants.LimelightConstants.m_limelightMountAngleDegree +  NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+        double m_y_angleToTagRadians = m_y_angleToTagDegrees * (3.14159 / 180.);
 
-          double m_limelightToTagInches = Units.inchesToMeters(((m_tagHeightInches - Constants.LimelightConstants.m_limelightLensHeightInches) / Math.tan(m_y_angleToTagRadians)) - Constants.LimelightConstants.m_limelightToFrontOfRobot)*.07;
+        double m_limelightToTagInches = Units.inchesToMeters(((m_tagHeightInches - Constants.LimelightConstants.m_limelightLensHeightInches) / Math.tan(m_y_angleToTagRadians)) - Constants.LimelightConstants.m_limelightToFrontOfRobot)*.07;
 
-          strafeVal = m_limelightToTagInches*Math.tan(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0));
-          strafeVal = strafeLimiter.calculate(
-            MathUtil.applyDeadband((strafeVal), Constants.SwerveConstants.inputDeadband));
-        }
-    double translationVal =
+        strafeVal = m_limelightToTagInches*Math.tan(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0));
+        strafeVal = strafeLimiter.calculate(
+        MathUtil.applyDeadband((strafeVal), Constants.SwerveConstants.inputDeadband));
+      }
+
+      double translationVal =
         translationLimiter.calculate(
             MathUtil.applyDeadband(m_translationSupplier.getAsDouble(), Constants.SwerveConstants.inputDeadband));
+
     if (m_SnapPressed.getAsBoolean() == false) 
     {
       SmartDashboard.putString("DB/String 5", Double.toString(m_rotationSupplier.getAsDouble()));
@@ -177,10 +179,13 @@ public class TeleopSwerve extends Command {
           SmartDashboard.putString("DB/String 9", Double.toString(move_to_yaw));
           rotationVal = rotationLimiter.calculate(
             MathUtil.applyDeadband(move_to_yaw, 0));
-          }
+    }
     /* Drive */
+    SmartDashboard.putString("DB/String 0 ", Double.toString(translationVal));
+
     m_SwerveSubsystem.drive(
-        //the joystick values (-1 to 1) multiplied by the max speed of the drivetrain
+        //the joystick values (-1 to 1) multiplied by the max speed of the drivetrai
+
         new Translation2d(translationVal, strafeVal).times(Constants.SwerveConstants.maxSpeed),
         //rotation value times max spin speed
         rotationVal * Constants.SwerveConstants.maxAngularVelocity,
@@ -188,7 +193,6 @@ public class TeleopSwerve extends Command {
         !m_robotCentricSupplier.getAsBoolean(),
         //open loop control
         true);
-
      }
 
   // Called once the command ends or is interrupted.
