@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class Eject extends Command
 {
-   
+    Timer timer = new Timer();
     GroundIntake intake;
-    int MODE;
+    int mode;
     
     //commented out bc no reasonable way to determine if we are there without doing math we would be "skipping"
     //  private double podium_degrees = 33.333;
@@ -22,28 +22,48 @@ public class Eject extends Command
         this.intake = m_Intake;
 
         addRequirements(m_Intake);
-
+        this.mode = MODE;
     }
 
     public void initialize()
     {      
-        if (MODE == 0)
+        SmartDashboard.putString("DB/String 7", Double.toString(mode));
+        if (mode == 0)
         {     
             intake.toSetPoint(3);
-            intake.setRollers(-80);
+
         }
         else
         {
             intake.setRollers(0);
             intake.toSetPoint(0);
         }
+        timer.restart();
+    }
+    public void execute()
+    {
         isFinished();
     }
 
     @Override
     public boolean isFinished() 
     {
-        return true;
+        if (timer.get() > 1)
+        {
+            if (mode == 0)
+            {
+                intake.setRollers(-80);
+            }
+            return true;
+        }
+        if (mode == 0)
+        {
+            return false;
+        }
+        else 
+        {
+           return true;
+        }
     }
 
     /*

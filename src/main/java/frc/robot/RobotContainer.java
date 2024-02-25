@@ -123,8 +123,6 @@ public class RobotContainer {
     NamedCommands.registerCommand("ShootFinish", new AutoShoot( m_Shooter, m_GroundIntake, 2));
     NamedCommands.registerCommand("StopIntake", new RetractIntake(m_GroundIntake, m_Shooter, m_Climber));
     NamedCommands.registerCommand("Intake", new DeployIntake(m_GroundIntake, m_Shooter, m_Climber));
-
-
     
     m_side_chooser.setDefaultOption("Blue", m_blue);
     m_side_chooser.addOption("Red", m_red);
@@ -166,7 +164,6 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    m_SwerveSubsystem.setWheelsToX();
 
     //path planner named commands.
 
@@ -183,10 +180,6 @@ public class RobotContainer {
     m_XboxController.button(Button.kY.value).onTrue(new InstantCommand(() -> m_SwerveSubsystem.zeroGyro()));
 
     
-    /*
-    m_XboxController.button(Button.kB.value).onTrue(new InstantCommand(() -> m_SwerveSubsystem.setWheelsToX()));
-    m_XboxController.button(Button.kX.value).onTrue(new Handoff(m_Shooter, m_GroundIntake, m_Climber));
-*/
 
     m_XboxController.povDown().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 0));
     m_XboxController.povLeft().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 1));
@@ -196,7 +189,7 @@ public class RobotContainer {
     m_XboxController.button(Button.kB.value).onFalse(new Eject(m_GroundIntake, 1));
 
     m_XboxController.button(Button.kRightBumper.value).onTrue(new ClosedShoot(m_Shooter, m_GroundIntake, m_Climber, m_Limelight));
-
+    m_XboxController.button(Button.kRightBumper.value).onFalse(new FinishShoot(m_Shooter, m_GroundIntake));
     m_XboxController.axisGreaterThan(3, 0).onTrue(new OpenShoot( m_Shooter, m_GroundIntake));
     m_XboxController.axisGreaterThan(3, 0).onFalse(new FinishShoot(m_Shooter, m_GroundIntake));
 

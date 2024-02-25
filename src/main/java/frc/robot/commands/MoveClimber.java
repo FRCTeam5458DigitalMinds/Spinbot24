@@ -30,17 +30,20 @@ public class MoveClimber extends Command {
     }
     public void initialize()
     {
-        /* 
+        SmartDashboard.putString("elevator inches", Double.toString(elevator.getInches()));
         if (setPoint == 0) 
         //down
         {
             shooter.toSetPoint(0);
+            shooter.runFeederWheels(0);
+            shooter.runFlyWheels(0);
         } 
         else if (setPoint == 1)
         //amp score
         {   
             shooter.toSetPoint(3);
         }
+        /*
         //climbing
         else if (setPoint == 2) {
             shooter.toSetPoint(2);

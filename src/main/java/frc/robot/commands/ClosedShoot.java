@@ -50,9 +50,8 @@ public class ClosedShoot extends Command
 
     public void initialize()
     {   
-        elevator_point = climber.getInches();
 
-            if (elevator_point <= 1)
+            if (climber.getStage() == 0)
             {
                 int cur_id = limelight.getID();
                 SmartDashboard.putNumber("cur ID", cur_id);
@@ -62,7 +61,7 @@ public class ClosedShoot extends Command
 
                 if (distance >= 0) 
                 {
-                    degrees = (distance - 0.65)*(1.1/.05);
+                    degrees = (distance - 0.65)*(1.5/.05);
                     //degrees = 3.5;
                   //  degrees = (73.5 - (Math.atan(2.0447/distance) * (180/3.14159)));
                     if (degrees < 40 && degrees >= 0)
@@ -88,11 +87,11 @@ public class ClosedShoot extends Command
                 
                 //CALL AUTOMATIC LIMELIGHTSHOOTING HERE!!!!
             } 
-            else if (elevator_point <= 7)
+            else if (climber.getStage() == 1)
             {
                 intake.setRollers(0);
-                shooter.runFlyWheels(95);
-                shooter.runFeederWheels(80);
+                shooter.runFlyWheels(-95);
+                shooter.runFeederWheels(85);
             }
             else 
             {
@@ -102,22 +101,27 @@ public class ClosedShoot extends Command
             }
             SmartDashboard.putString("DB/String 1", "closed shoot");
 
+            timer.restart();
         }
         public void execute()
         {
             isFinished();
+            SmartDashboard.putNumber("elevator stage", climber.getStage());
         }
 
         @Override
         public boolean isFinished() {
-            if (timer.get() > 1 && shooter.getV() == 0)
-            {
-                shooter.runFeederWheels(85);
-                intake.setRollers(-50);
+            if (timer.get() > 1) {
+                SmartDashboard.putString("DB/String 1", "timer good, >:(");
+                if (shooter.getV() == 0)
+                {
+                    SmartDashboard.putString("DB/String 1", "good!");
 
-                SmartDashboard.putString("DB/String 1", "closed shoot done");
+                    shooter.runFeederWheels(85);
+                    intake.setRollers(-50);
 
-                return true;
+                    return true;
+                }
             }
             return false;
         }

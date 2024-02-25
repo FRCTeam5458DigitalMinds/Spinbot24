@@ -27,7 +27,7 @@ public class Shooter extends SubsystemBase{
 
     private double intakeHandoff = 18;
     private double climbingPosition = 38.56;
-    private double ampPosition = 49;
+    private double ampPosition = 50;
     private double m_ff;
 
     private double[] m_setPoints = {0, intakeHandoff, climbingPosition, ampPosition};

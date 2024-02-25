@@ -104,15 +104,15 @@ public class TeleopSwerve extends Command {
         translationLimiter.calculate(
             MathUtil.applyDeadband(m_translationSupplier.getAsDouble(), Constants.SwerveConstants.inputDeadband));
 
-    if (m_SnapPressed.getAsBoolean() == false) 
-    {
+   // if (m_SnapPressed.getAsBoolean() == false) 
+    //{
       SmartDashboard.putString("DB/String 5", Double.toString(m_rotationSupplier.getAsDouble()));
       rotationVal =
       rotationLimiter.calculate(
           MathUtil.applyDeadband(m_rotationSupplier.getAsDouble(), 0.1));
 
       SmartDashboard.putString("DB/String 9", Double.toString(move_to_yaw));
-    }
+    //}
     
   // rotation snapping, restore soon and configure to a seperate button
     /*
@@ -123,6 +123,7 @@ public class TeleopSwerve extends Command {
            MathUtil.applyDeadband((x_offset/-27), Constants.SwerveConstants.inputDeadband));
       }
       */
+      /* 
       else {
         current_yaw = m_SwerveSubsystem.getYawDegrees();
       //  SmartDashboard.putString("DB/String 6", Double.toString(current_yaw));
@@ -160,7 +161,7 @@ public class TeleopSwerve extends Command {
         {
           move_to_yaw -= 360;
         }
-        
+        */
           //move_to_yaw = m_SwerveSubsystem.closestAngle(current_yaw, final_yaw);
         SmartDashboard.putString("DB/String 8", Double.toString(move_to_yaw));
         /*
@@ -179,9 +180,9 @@ public class TeleopSwerve extends Command {
           SmartDashboard.putString("DB/String 9", Double.toString(move_to_yaw));
           rotationVal = rotationLimiter.calculate(
             MathUtil.applyDeadband(move_to_yaw, 0));
-    }
+    
     /* Drive */
-    SmartDashboard.putString("DB/String 0 ", Double.toString(translationVal));
+   // SmartDashboard.putString("DB/String 0 ", Double.toString(translationVal));
 
     m_SwerveSubsystem.drive(
         //the joystick values (-1 to 1) multiplied by the max speed of the drivetrai
@@ -193,7 +194,7 @@ public class TeleopSwerve extends Command {
         !m_robotCentricSupplier.getAsBoolean(),
         //open loop control
         true);
-     }
+    }
 
   // Called once the command ends or is interrupted.
   @Override

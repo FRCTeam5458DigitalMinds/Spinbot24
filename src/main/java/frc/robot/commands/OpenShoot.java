@@ -48,18 +48,23 @@ public class OpenShoot extends Command
     
     public void execute() 
     {
-        if (timer.get() > 1.0)
-        {
+        
+            SmartDashboard.putNumber("time", timer.get());
             isFinished();
-        }
+        
     }
 
     public boolean isFinished()
     {
                 SmartDashboard.putString("DB/String 2", Double.toString(timer.get()));
 
-        SmartDashboard.putString("DB/String 1", "open shoot done");
+        if (timer.get() > 1)
+        {
+        intake.setRollers(-50);
+        shooter.runFeederWheels(85);
 
         return true;
+        }
+        return false;
     }
 }

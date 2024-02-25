@@ -13,7 +13,7 @@ import frc.robot.Constants;
 import frc.robot.Constants.ClimbConstants;
 
 public class Climber extends SubsystemBase {
-    private double stage1 = (306.5961938 / 42);
+    private double stage1 = (315.5961938 / 42);
     private double stage2 = (1642.5750 / 42);
     private double[] m_setPoints = {0, stage1, stage2};
     private int climb_ID1 = ClimbConstants.climb_ID1;
@@ -57,12 +57,10 @@ public class Climber extends SubsystemBase {
 
   public void toSetPoint(int setPoint) 
   {
-
-   
     /*
     if (setPoint == 1)
     {
-      climbMotor_1.set(0.05);
+      climbMotor_1.set(0.05); 
     }
     else
     {
@@ -73,16 +71,19 @@ public class Climber extends SubsystemBase {
     SmartDashboard.putString("DB/String 6", Double.toString(climbMotor_1.get()));
     current_stage = setPoint;
   }
+
   public int getStage()
   {
     return current_stage;
   }
+
   public double getInches()
   {
     //CHANGE TO CONVERSION 
-    double current_inches = climbEncoder.getPosition() * (1/16.3) * (1.0/42.0) * (1.5992 * 3.14159);
+    double current_inches = climbEncoder.getPosition() * (1/16.3) * (1.5992 * 3.14159);
     return current_inches;
   }
+
   public double getEncoder()
   {
     return climbEncoder.getPosition();
