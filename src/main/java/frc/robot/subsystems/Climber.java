@@ -68,7 +68,7 @@ public class Climber extends SubsystemBase {
     {
       climbMotor_1.set(0);
     } */
-    //climbController.setReference(m_setPoints[setPoint], CANSparkMax.ControlType.kSmartMotion);
+    climbController.setReference(m_setPoints[setPoint], CANSparkMax.ControlType.kSmartMotion);
     SmartDashboard.putString("DB/String 4", Double.toString(m_setPoints[setPoint]));
     SmartDashboard.putString("DB/String 6", Double.toString(climbMotor_1.get()));
     current_stage = setPoint;
