@@ -17,12 +17,12 @@ public class MoveClimber extends Command {
     int setPoint;
 
 
-    public MoveClimber(GroundIntake Intake, Shooter m_Shooter, Climber m_Climber, int setPoint) 
+    public MoveClimber(GroundIntake Intake, Shooter m_Shooter, Climber m_Climber, int SetPoint) 
     {
         this.intake = Intake;
         this.shooter = m_Shooter;
         this.elevator = m_Climber;
-        this.setPoint = setPoint; 
+        this.setPoint = SetPoint; 
 
         addRequirements(Intake);
         addRequirements(m_Shooter);
@@ -51,8 +51,11 @@ public class MoveClimber extends Command {
         shooter.runFeederWheels(0);
         shooter.runFlyWheels(0);
         */
+
         SmartDashboard.putString("DB/String 3", Double.toString(elevator.getEncoder()));
         elevator.toSetPoint(setPoint);
+
+
         isFinished();
         
     }
