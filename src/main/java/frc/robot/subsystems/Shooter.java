@@ -99,6 +99,8 @@ public class Shooter extends SubsystemBase{
 
     public void toSetPoint(int setPoint) 
     {
+      SmartDashboard.putNumber("shooter setpoint", setPoint);
+
       var motorPosSignal = shooterMotor.getRotorPosition();
       var motorPos = motorPosSignal.getValue();
 
@@ -138,6 +140,8 @@ public class Shooter extends SubsystemBase{
     }*/
     public void toCustomSetpoint(double degrees)
     {
+      SmartDashboard.putNumber("shooter degree setpoint", degrees);
+
       double toTicks = degreesToRotations(degrees);
       SmartDashboard.putString("DB/String 2", Double.toString(degrees));
 
@@ -150,12 +154,7 @@ public class Shooter extends SubsystemBase{
       return (degrees / 360. * 218.75);
     }
 
-    public void runFeederAtSet(int OutputPercent)
-    {
 
-      //OutputPercent /= 100;
-      //feederWheel.set(OutputPercent);
-    }
     
     public double getEncoder()
     {
@@ -163,6 +162,9 @@ public class Shooter extends SubsystemBase{
     }
     public void runFlyWheels(double OutputPercent)
     {
+
+      SmartDashboard.putNumber("fly wheels", OutputPercent);
+
       OutputPercent /= 100.;
       SmartDashboard.putString("DB/String 9", Double.toString(OutputPercent));
       flyWheelOne.set(OutputPercent);
@@ -170,6 +172,8 @@ public class Shooter extends SubsystemBase{
 
     public void runFeederWheels(double OutputPercent)
     {
+      SmartDashboard.putNumber("feeder wheels", OutputPercent);
+
       OutputPercent /= 100.;
       SmartDashboard.putString("DB/String 0", Double.toString(OutputPercent));
       feederWheel.set(OutputPercent);

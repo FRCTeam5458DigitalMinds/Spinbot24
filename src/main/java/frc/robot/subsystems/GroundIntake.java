@@ -64,12 +64,15 @@ public class GroundIntake extends SubsystemBase {
 
   public void toSetPoint(int setPoint) 
   {
+    SmartDashboard.putNumber("Intake setpoint", setPoint);
     intakeController.setReference(m_setPoints[setPoint], CANSparkMax.ControlType.kSmartMotion);
     //intakeController.set
   }
 
   public void setRollers(double OutputPercent)
   {
+        SmartDashboard.putNumber("Intake roller", OutputPercent);
+
       OutputPercent /= 100.;
       rollerMotor.set(-OutputPercent);
   

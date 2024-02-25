@@ -133,7 +133,7 @@ public class RobotContainer {
    // m_auto_chooser.setDefaultOption("Four Note Score", FourNoteAuto);
    // SmartDashboard.putData("Example Path (may not work)", new PathPlannerAuto("4Note_Auto"));
 
-    //SmartDashboard.putData("Auto Choices:", m_auto_chooser);
+   // SmartDashboard.putData("Auto Choices:", m_auto_chooser);
     SmartDashboard.putData("Side", m_side_chooser);
    // SmartDashboard.putData("Path", m_auto_chooser);
     
@@ -183,13 +183,14 @@ public class RobotContainer {
     m_XboxController.button(Button.kY.value).onTrue(new InstantCommand(() -> m_SwerveSubsystem.zeroGyro()));
 
     
-    /* 
+    /*
     m_XboxController.button(Button.kB.value).onTrue(new InstantCommand(() -> m_SwerveSubsystem.setWheelsToX()));
     m_XboxController.button(Button.kX.value).onTrue(new Handoff(m_Shooter, m_GroundIntake, m_Climber));
-`*/
+*/
+
     m_XboxController.povDown().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 0));
     m_XboxController.povLeft().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 1));
- //   m_XboxController.povUp().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 2));
+    m_XboxController.povUp().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 2));
 
     m_XboxController.button(Button.kB.value).onTrue(new Eject(m_GroundIntake, 0));
     m_XboxController.button(Button.kB.value).onFalse(new Eject(m_GroundIntake, 1));
@@ -202,10 +203,7 @@ public class RobotContainer {
     
     m_XboxController.axisGreaterThan(2, 0).whileTrue(new DeployIntake(m_GroundIntake, m_Shooter, m_Climber));
     m_XboxController.axisGreaterThan(2, 0).onFalse(new RetractIntake(m_GroundIntake, m_Shooter, m_Climber));
-    //    m_XboxController.axisGreaterThan(2, 0).onFalse();
-
-    SmartDashboard.putBoolean("Red?", m_side_chooser.getSelected() == "Red");
-
+    
    // m_XboxController.button(Button.kA.value).onTrue(new InstantCommand(() -> m_Limelight.LimeToDrive()));
    // m_XboxController.button(Button.kY.value).onTrue(new InstantCommand(() -> Rotation_Snap()));
 

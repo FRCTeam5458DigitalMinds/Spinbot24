@@ -37,7 +37,6 @@ public class Test extends Command
         else
         {        
             shooter.runFlyWheels(95);
-            shooter.runFeederAtSet(80);
         }
 
     

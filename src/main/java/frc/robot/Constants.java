@@ -102,10 +102,10 @@ public final class Constants {
         /* Module Specific Constants */
     /* Front Left Module - Module 0 */
     public static final class Mod0 {
-      public static final int driveMotorID = 6; 
-      public static final int angleMotorID = 5; 
-      public static final int canCoderID = 34;
-      public static final Rotation2d angleOffset = Rotation2d.fromRotations(0.846680);
+      public static final int driveMotorID = 2; 
+      public static final int angleMotorID = 1; 
+      public static final int canCoderID = 36;
+      public static final Rotation2d angleOffset = Rotation2d.fromRotations(0.927979);
     /* Angle Motor PID Values */
       public static final double angleKP = 0.01; //to tune
       public static final double angleKI = 0.0; //to tune
@@ -119,10 +119,10 @@ public final class Constants {
 
     /* Front Right Module - Module 1 */
     public static final class Mod1 {
-      public static final int driveMotorID = 8;
-      public static final int angleMotorID = 7;
-      public static final int canCoderID = 32;
-      public static final Rotation2d angleOffset = Rotation2d.fromRotations(0.812012);
+      public static final int driveMotorID = 4;
+      public static final int angleMotorID = 3;
+      public static final int canCoderID = 38;
+      public static final Rotation2d angleOffset =  Rotation2d.fromRotations(0.350098);
       /* Angle Motor PID Values */
       public static final double angleKP = 0.01; //to tune
       public static final double angleKI = 0.0; //to tune
@@ -136,10 +136,10 @@ public final class Constants {
 
     /* Back Left Module - Module 2 */
     public static final class Mod2 {
-      public static final int driveMotorID = 4;
-      public static final int angleMotorID = 3;
-      public static final int canCoderID = 38;
-      public static final Rotation2d angleOffset = Rotation2d.fromRotations(0.213379);
+      public static final int driveMotorID = 8;
+      public static final int angleMotorID = 7;
+      public static final int canCoderID = 32;
+      public static final Rotation2d angleOffset = Rotation2d.fromRotations(0.184082);
       /* Angle Motor PID Values */
       public static final double angleKP = 0.01; //to tune
       public static final double angleKI = 0.0; //to tune
@@ -153,10 +153,10 @@ public final class Constants {
 
     /* Back Right Module - Module 3 */
     public static final class Mod3 {
-      public static final int driveMotorID = 2;
-      public static final int angleMotorID = 1;
-      public static final int canCoderID = 36;
-      public static final Rotation2d angleOffset = Rotation2d.fromRotations(.822754);
+      public static final int driveMotorID = 6;
+      public static final int angleMotorID = 5;
+      public static final int canCoderID = 34;
+      public static final Rotation2d angleOffset = Rotation2d.fromRotations(0.031494);
         /* Angle Motor PID Values */
       public static final double angleKP = 0.01; //to tune
       public static final double angleKI = 0.0; //to tune
@@ -241,16 +241,16 @@ public final class Constants {
     public static final double kI = 0.000;
 
     //targets the errors in positioning
-    public static final double kP = 0.001;
+    public static final double kP = 0.0075;
     //targets the errors in velocity
     public static final double kD = 0.0000;
 
-    public static final double FF = 0.000001;
+    public static final double FF = 0.00035;
 
     public static final double max_vel = 2000;
     public static final double min_vel = 0;
     public static final double max_accel = 1500;
 
-    public static final double allowed_error = 0.1;
+    public static final double allowed_error = 0.015;
   }
 }
