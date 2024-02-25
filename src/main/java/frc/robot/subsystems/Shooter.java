@@ -46,10 +46,10 @@ public class Shooter extends SubsystemBase{
 
       currentconfig.StatorCurrentLimit = 40;
       currentconfig.StatorCurrentLimitEnable = true;
-
-      mm.MotionMagicCruiseVelocity = 30;
-      mm.MotionMagicAcceleration = 15;
-      mm.MotionMagicJerk = 20;
+ 
+      mm.MotionMagicCruiseVelocity = 40;
+      mm.MotionMagicAcceleration = 25;
+      mm.MotionMagicJerk = 23;
     
 
       shooterMotor.setPosition(0);

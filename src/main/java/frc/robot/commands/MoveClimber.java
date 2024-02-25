@@ -4,6 +4,7 @@ import java.util.function.BooleanSupplier;
 import frc.robot.subsystems.GroundIntake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Climber;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Climber;
 
@@ -29,7 +30,7 @@ public class MoveClimber extends Command {
     }
     public void initialize()
     {
-
+        /* 
         if (setPoint == 0) 
         //down
         {
@@ -49,6 +50,8 @@ public class MoveClimber extends Command {
         intake.setRollers(0);
         shooter.runFeederWheels(0);
         shooter.runFlyWheels(0);
+        */
+        SmartDashboard.putString("DB/String 3", Double.toString(elevator.getEncoder()));
         elevator.toSetPoint(setPoint);
         isFinished();
         

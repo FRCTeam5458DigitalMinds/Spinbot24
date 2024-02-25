@@ -43,11 +43,12 @@ public class OpenShoot extends Command
         intake.setRollers(0);
 
         timer.restart();
+        SmartDashboard.putString("DB/String 1", "open shoot");
     }
     
     public void execute() 
     {
-        if (timer.get() > 1)
+        if (timer.get() > 1.0)
         {
             isFinished();
         }
@@ -55,6 +56,10 @@ public class OpenShoot extends Command
 
     public boolean isFinished()
     {
+                SmartDashboard.putString("DB/String 2", Double.toString(timer.get()));
+
+        SmartDashboard.putString("DB/String 1", "open shoot done");
+
         return true;
     }
 }

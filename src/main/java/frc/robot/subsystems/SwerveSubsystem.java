@@ -33,7 +33,7 @@ public class SwerveSubsystem extends SubsystemBase {
   private SwerveModule[] mSwerveMods;
 
   private Field2d field;
-  private BooleanSupplier sideChosen = () -> false;
+  private BooleanSupplier sideChosen = () -> (SmartDashboard.getBoolean("Red?", false));
 
   /** Creates a new SwerveSubsystem. */
   public SwerveSubsystem() 

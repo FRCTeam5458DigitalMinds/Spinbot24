@@ -51,6 +51,7 @@ public class ClosedShoot extends Command
     public void initialize()
     {   
         elevator_point = climber.getInches();
+
             if (elevator_point <= 1)
             {
                 int cur_id = limelight.getID();
@@ -61,9 +62,10 @@ public class ClosedShoot extends Command
 
                 if (distance >= 0) 
                 {
-                    degrees = 3.5;
+                    degrees = (distance - 0.65)*(1.1/.05);
+                    //degrees = 3.5;
                   //  degrees = (73.5 - (Math.atan(2.0447/distance) * (180/3.14159)));
-                    if (degrees < 60 && degrees >= 0)
+                    if (degrees < 40 && degrees >= 0)
                     {
                         SmartDashboard.putNumber("degrees", degrees);
                         SmartDashboard.putNumber("Command finished", degrees / 360. * 218.75);
@@ -98,6 +100,8 @@ public class ClosedShoot extends Command
                 shooter.runFlyWheels(-50);
                 shooter.runFeederWheels(-50);
             }
+            SmartDashboard.putString("DB/String 1", "closed shoot");
+
         }
         public void execute()
         {
@@ -110,6 +114,8 @@ public class ClosedShoot extends Command
             {
                 shooter.runFeederWheels(85);
                 intake.setRollers(-50);
+
+                SmartDashboard.putString("DB/String 1", "closed shoot done");
 
                 return true;
             }

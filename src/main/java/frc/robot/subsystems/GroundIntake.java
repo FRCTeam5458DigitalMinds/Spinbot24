@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
 public class GroundIntake extends SubsystemBase {
-  private double deployPosition = -36.4;
+  private double deployPosition = -36.2;
   private double climbingPosition = -13.104;
   private double origin = -1.75;
   private double ejectPosition = -27;
@@ -23,6 +23,7 @@ public class GroundIntake extends SubsystemBase {
   
   private final SparkPIDController intakeController;
   private RelativeEncoder intakeEncoder;
+  
   private CANSparkMax intakeMotor;
   private CANSparkMax rollerMotor;
   private final TimeOfFlight m_rangeSensor = new TimeOfFlight(0);
@@ -40,7 +41,7 @@ public class GroundIntake extends SubsystemBase {
     rollerMotor.setIdleMode(IdleMode.kBrake);
     rollerMotor.burnFlash();
 
-    rollerMotor.setSmartCurrentLimit(23);
+    rollerMotor.setSmartCurrentLimit(35);
     intakeMotor.setSmartCurrentLimit(30);
 
     intakeController = intakeMotor.getPIDController();
@@ -104,7 +105,10 @@ public class GroundIntake extends SubsystemBase {
 
   public double intakedistance()
   {
+    
     intakedistance = (int)m_rangeSensor.getRange();
+
+    SmartDashboard.putNumber("space, time (of flight)", intakedistance);
     return intakedistance;
   }
   /* protected void interrupted()

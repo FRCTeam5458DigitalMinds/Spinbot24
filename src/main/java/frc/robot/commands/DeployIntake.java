@@ -38,18 +38,26 @@ public class DeployIntake extends Command {
         
         intake.setRollers(80);
         intake.toSetPoint(1);
-      //  m_rangeSensor.setRangingMode(RangingMode.Short, 40);    
-      //  SmartDashboard.putString("DB/String 7", "Distance: " + (int)m_rangeSensor.getRange() + "mm   Std Dev: " + (int)m_rangeSensor.getRangeSigma() + "mm   Status: " + m_rangeSensor.getStatus());
 
+        //m_rangeSensor.setRangingMode(RangingMode.Short, 40);    
+        SmartDashboard.putNumber("Intake Rollers", 80);
+        SmartDashboard.putNumber("Intake Setpoint", 1);
+
+        SmartDashboard.putNumber("hehehe", 1);
     }
 
     public void execute() {
-        if (intake.intakedistance() < 5)
+        SmartDashboard.putNumber("Intake Distance", intake.intakedistance());
+        if (intake.intakedistance() / 10 < 5)
         {
+            SmartDashboard.putNumber("hehehe", 0);
+
            new RetractIntake(intake, shooter, elevator);
            isFinished();
         }
     }
+
+    @Override
     public boolean isFinished()
     {
         return true;

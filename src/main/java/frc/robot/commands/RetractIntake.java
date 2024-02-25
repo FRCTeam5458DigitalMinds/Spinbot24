@@ -5,6 +5,7 @@ import java.util.function.BooleanSupplier;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.GroundIntake;
 import frc.robot.subsystems.Shooter;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 //ACCOUNT FOR TIME OF FLIGHT WHEN WE GET/FINISH IMPORTANT STUFF
@@ -32,6 +33,11 @@ public class RetractIntake extends Command {
         shooter.toSetPoint(0);
         shooter.runFeederWheels(0);
         shooter.runFlyWheels(0);
+
+        SmartDashboard.putNumber("Intake Rollers", 0);
+        SmartDashboard.putNumber("Intake Setpoint", 0);
+
+
 
        isFinished();
     }

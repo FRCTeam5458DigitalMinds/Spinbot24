@@ -32,8 +32,8 @@ public final class Constants {
     public static final int[] apTagGyrosRed = {0, 0, 180, 180, -90, 0, 0, 0, 0, 0, -60, 60, 180, 0, 0, 0};
     public static final int[] apTagGyrosBlue = {0, 0, 0, 0, 90, 90, 180, 180, 0, 0, 0, 0, 0, 180, 60, -60};
         /* Drivetrain Constants */
-    public static final double trackWidth = Units.inchesToMeters(26.5);//to find
-    public static final double wheelBase = Units.inchesToMeters(26.5);//to find
+    public static final double trackWidth = Units.inchesToMeters(20.5);//to find
+    public static final double wheelBase = Units.inchesToMeters(20.5);//to find
     public static final double wheelDiameter = Units.inchesToMeters(4.0);
     public static final double wheelCircumference = wheelDiameter * Math.PI;
 
@@ -210,9 +210,9 @@ public final class Constants {
     public static final double kI = 0.00000;
 
     //targets the errors in positioning
-    public static final double kP = 0.15;
+    public static final double kP = 0.18;
     //targets the errors in velocity
-    public static final double kD = 0.021;
+    public static final double kD = 0.03;
 
     public static final double FF = 0.0007;
 
@@ -241,16 +241,16 @@ public final class Constants {
     public static final double kI = 0.000;
 
     //targets the errors in positioning
-    public static final double kP = 0.0075;
+    public static final double kP = 0.001;
     //targets the errors in velocity
-    public static final double kD = 0.007;
+    public static final double kD = 0.0000;
 
-    public static final double FF = 0.00035;
+    public static final double FF = 0.000001;
 
     public static final double max_vel = 2000;
     public static final double min_vel = 0;
     public static final double max_accel = 1500;
 
-    public static final double allowed_error = 0.015;
+    public static final double allowed_error = 0.1;
   }
 }
