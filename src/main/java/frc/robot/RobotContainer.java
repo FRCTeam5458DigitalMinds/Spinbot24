@@ -64,7 +64,8 @@ public class RobotContainer {
  // NamedCommands.registerCommand("print hello", Commands.print("hello"));
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_XboxController = new CommandXboxController(0);
+  private final CommandXboxController m_DriveController = new CommandXboxController(0);
+  private final CommandXboxController m_OperatorController = new CommandXboxController(1);
 
   //private final CommandJoystick m_JoystickL = new CommandJoystick(0);
   //private final CommandJoystick m_JoystickR = new CommandJoystick(1);
@@ -92,13 +93,13 @@ public class RobotContainer {
   private final int rotationAxis = XboxController.Axis.kRightX.value;
   
   private final Trigger robotCentric =
-  new Trigger(m_XboxController.leftBumper());
+  new Trigger(m_DriveController.leftBumper());
 
   private final Trigger rotation_snap_pressed =
-  new Trigger(m_XboxController.x());
+  new Trigger(m_DriveController.x());
 
   private final Trigger strafe_snap_pressed =
-  new Trigger(m_XboxController.a());
+  new Trigger(m_DriveController.a());
 
   public final boolean blueOrNot = true;
   //path planner
@@ -140,9 +141,9 @@ public class RobotContainer {
     m_SwerveSubsystem.setDefaultCommand(
       new TeleopSwerve(
           m_SwerveSubsystem, m_Limelight,
-          () -> -m_XboxController.getRawAxis(translationAxis),
-          () -> -m_XboxController.getRawAxis(strafeAxis),
-          () -> -m_XboxController.getRawAxis(rotationAxis),
+          () -> -m_DriveController.getRawAxis(translationAxis),
+          () -> -m_DriveController.getRawAxis(strafeAxis),
+          () -> -m_DriveController.getRawAxis(rotationAxis),
           () -> robotCentric.getAsBoolean(),
           () -> rotation_snap_pressed.getAsBoolean(),
           () -> strafe_snap_pressed.getAsBoolean(),
@@ -167,38 +168,43 @@ public class RobotContainer {
 
     //path planner named commands.
 
-   // m_XboxController.button(kButton.kY.value).onTrue(new IntakeTest(m_GroundIntake, 1));
-   // m_XboxController.button(Button.kY.value).onTrue(new IntakeTest(m_GroundIntake, 1));
-    m_XboxController.button(Button.kA.value).onTrue(new IntakeTest(m_GroundIntake));
+   // m_DriveController.button(kButton.kY.value).onTrue(new IntakeTest(m_GroundIntake, 1));
+   // m_DriveController.button(Button.kY.value).onTrue(new IntakeTest(m_GroundIntake, 1));
+    m_DriveController.button(Button.kA.value).onTrue(new IntakeTest(m_GroundIntake));
     
-   // m_XboxController.button(Button.kA.value).onTrue(new Shoot(m_Climber, m_Shooter, m_GroundIntake, m_SwerveSubsystem, m_Limelight, 0));
-   // m_XboxController.button(Button.kB.value).whileTrue(new Shoot(m_Climber, m_Shooter, m_GroundIntake, m_SwerveSubsystem, m_Limelight, 0));
-    //m_XboxController.button(Button.kB.value).onFalse(new Shoot(m_Climber, m_Shooter, m_GroundIntake, m_SwerveSubsystem, m_Limelight, 2));
+   // m_DriveController.button(Button.kA.value).onTrue(new Shoot(m_Climber, m_Shooter, m_GroundIntake, m_SwerveSubsystem, m_Limelight, 0));
+   // m_DriveController.button(Button.kB.value).whileTrue(new Shoot(m_Climber, m_Shooter, m_GroundIntake, m_SwerveSubsystem, m_Limelight, 0));
+    //m_DriveController.button(Button.kB.value).onFalse(new Shoot(m_Climber, m_Shooter, m_GroundIntake, m_SwerveSubsystem, m_Limelight, 2));
 
-    m_XboxController.button(Button.kX.value).onTrue(new Handoff(m_Shooter, m_GroundIntake, m_Climber));
+    m_DriveController.button(Button.kX.value).onTrue(new Handoff(m_Shooter, m_GroundIntake, m_Climber));
+    m_OperatorController.button(Button.kX.value).onTrue(new Handoff(m_Shooter, m_GroundIntake, m_Climber));
     
-    m_XboxController.button(Button.kY.value).onTrue(new InstantCommand(() -> m_SwerveSubsystem.zeroGyro()));
-
-    
-
-    m_XboxController.povDown().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 0));
-    m_XboxController.povLeft().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 1));
-    m_XboxController.povUp().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 2));
-
-    m_XboxController.button(Button.kB.value).onTrue(new Eject(m_GroundIntake, 0));
-    m_XboxController.button(Button.kB.value).onFalse(new Eject(m_GroundIntake, 1));
-
-    m_XboxController.button(Button.kRightBumper.value).onTrue(new ClosedShoot(m_Shooter, m_GroundIntake, m_Climber, m_Limelight));
-    m_XboxController.button(Button.kRightBumper.value).onFalse(new FinishShoot(m_Shooter, m_GroundIntake));
-    m_XboxController.axisGreaterThan(3, 0).onTrue(new OpenShoot( m_Shooter, m_GroundIntake));
-    m_XboxController.axisGreaterThan(3, 0).onFalse(new FinishShoot(m_Shooter, m_GroundIntake));
+    m_DriveController.button(Button.kY.value).onTrue(new InstantCommand(() -> m_SwerveSubsystem.zeroGyro()));
 
     
-    m_XboxController.axisGreaterThan(2, 0).whileTrue(new DeployIntake(m_GroundIntake, m_Shooter, m_Climber));
-    m_XboxController.axisGreaterThan(2, 0).onFalse(new RetractIntake(m_GroundIntake, m_Shooter, m_Climber));
+
+    m_DriveController.povDown().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 0));
+    m_DriveController.povLeft().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 1));
+    m_DriveController.povUp().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 2));
+
+    m_OperatorController.povDown().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 0));
+    m_OperatorController.povLeft().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 1));
+    m_OperatorController.povUp().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 2));
+
+    m_DriveController.button(Button.kB.value).onTrue(new Eject(m_GroundIntake, 0));
+    m_DriveController.button(Button.kB.value).onFalse(new Eject(m_GroundIntake, 1));
+
+    m_DriveController.button(Button.kRightBumper.value).onTrue(new ClosedShoot(m_Shooter, m_GroundIntake, m_Climber, m_Limelight));
+    m_DriveController.button(Button.kRightBumper.value).onFalse(new FinishShoot(m_Shooter, m_GroundIntake));
+    m_DriveController.axisGreaterThan(3, 0).onTrue(new OpenShoot( m_Shooter, m_GroundIntake));
+    m_DriveController.axisGreaterThan(3, 0).onFalse(new FinishShoot(m_Shooter, m_GroundIntake));
+
     
-   // m_XboxController.button(Button.kA.value).onTrue(new InstantCommand(() -> m_Limelight.LimeToDrive()));
-   // m_XboxController.button(Button.kY.value).onTrue(new InstantCommand(() -> Rotation_Snap()));
+    m_DriveController.axisGreaterThan(2, 0).whileTrue(new DeployIntake(m_GroundIntake, m_Shooter, m_Climber));
+    m_DriveController.axisGreaterThan(2, 0).onFalse(new RetractIntake(m_GroundIntake, m_Shooter, m_Climber));
+    
+   // m_DriveController.button(Button.kA.value).onTrue(new InstantCommand(() -> m_Limelight.LimeToDrive()));
+   // m_DriveController.button(Button.kY.value).onTrue(new InstantCommand(() -> Rotation_Snap()));
 
   }
 
