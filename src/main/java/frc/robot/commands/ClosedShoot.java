@@ -56,12 +56,13 @@ public class ClosedShoot extends Command
                 int cur_id = limelight.getID();
                 SmartDashboard.putNumber("cur ID", cur_id);
                 distance = limelight.find_Tag_Y_Distance(limelight.findTagHeightFromID(limelight.check_eligible_id(cur_id)));
-                SmartDashboard.putString("DB/String 1", Double.toString(distance));
+                SmartDashboard.putString("distance", Double.toString(distance));
                 SmartDashboard.putString("DB/String 8", "auto");
 
                 if (distance >= 0) 
                 {
                     degrees = (distance - 0.65)*(1.5/.05);
+                   // degrees = 15;
                     //degrees = 3.5;
                   //  degrees = (73.5 - (Math.atan(2.0447/distance) * (180/3.14159)));
                     if (degrees < 40 && degrees >= 0)

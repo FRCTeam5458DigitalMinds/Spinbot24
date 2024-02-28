@@ -26,7 +26,7 @@ public class Shooter extends SubsystemBase{
     private TalonFX feederWheel = new TalonFX(Constants.ShooterConstants.FeederWheel_ID);
 
     private double intakeHandoff = 18;
-    private double climbingPosition = 38.56;
+    private double climbingPosition = 39.2;
     private double ampPosition = 50;
     private double m_ff;
 
@@ -47,9 +47,9 @@ public class Shooter extends SubsystemBase{
       currentconfig.StatorCurrentLimit = 40;
       currentconfig.StatorCurrentLimitEnable = true;
  
-      mm.MotionMagicCruiseVelocity = 40;
-      mm.MotionMagicAcceleration = 25;
-      mm.MotionMagicJerk = 23;
+      mm.MotionMagicCruiseVelocity = 130;
+      mm.MotionMagicAcceleration = 150;
+      mm.MotionMagicJerk = 45;
     
 
       shooterMotor.setPosition(0);
@@ -69,7 +69,7 @@ public class Shooter extends SubsystemBase{
       slot0Configs.kD = 0.1;
       slot0Configs.kS = 0.3;
       slot0Configs.kV = 0.1;
-      m_ff = .1;
+      m_ff = 1;
 
       slot1Configs.kP = 4.8;
       slot1Configs.kI = 0;

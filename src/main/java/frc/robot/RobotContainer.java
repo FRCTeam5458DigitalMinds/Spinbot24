@@ -96,7 +96,7 @@ public class RobotContainer {
   new Trigger(m_DriveController.leftBumper());
 
   private final Trigger rotation_snap_pressed =
-  new Trigger(m_DriveController.x());
+  new Trigger(m_DriveController.rightBumper());
 
   private final Trigger strafe_snap_pressed =
   new Trigger(m_DriveController.a());

@@ -207,14 +207,14 @@ public final class Constants {
     //largely ignore the integral value as it can quickly cause problems
 
     //targets the errors over time
-    public static final double kI = 0.00000;
+    public static final double kI = 0.00005;
 
     //targets the errors in positioning
-    public static final double kP = 0.18;
+    public static final double kP = 0.23;
     //targets the errors in velocity
-    public static final double kD = 0.03;
+    public static final double kD = 0.05;
 
-    public static final double FF = 0.0007;
+    public static final double FF = 0.00085;
 
     public static final double max_vel = 1500;
     public static final double min_vel = 0;

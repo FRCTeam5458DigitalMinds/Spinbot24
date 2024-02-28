@@ -34,6 +34,7 @@ public class MoveClimber extends Command {
         if (setPoint == 0) 
         //down
         {
+            intake.toSetPoint(0);
             shooter.toSetPoint(0);
             shooter.runFeederWheels(0);
             shooter.runFlyWheels(0);
@@ -43,8 +44,7 @@ public class MoveClimber extends Command {
         {   
             shooter.toSetPoint(3);
         }
-        /*
-        //climbing
+        
         else if (setPoint == 2) {
             shooter.toSetPoint(2);
             intake.toSetPoint(2);
@@ -53,7 +53,7 @@ public class MoveClimber extends Command {
         intake.setRollers(0);
         shooter.runFeederWheels(0);
         shooter.runFlyWheels(0);
-        */
+        
 
         SmartDashboard.putString("DB/String 3", Double.toString(elevator.getEncoder()));
         elevator.toSetPoint(setPoint);

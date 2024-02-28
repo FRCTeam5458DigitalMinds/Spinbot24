@@ -104,25 +104,25 @@ public class TeleopSwerve extends Command {
         translationLimiter.calculate(
             MathUtil.applyDeadband(m_translationSupplier.getAsDouble(), Constants.SwerveConstants.inputDeadband));
 
-   // if (m_SnapPressed.getAsBoolean() == false) 
-    //{
+    if (m_SnapPressed.getAsBoolean() == false) 
+    {
       SmartDashboard.putString("DB/String 5", Double.toString(m_rotationSupplier.getAsDouble()));
       rotationVal =
       rotationLimiter.calculate(
           MathUtil.applyDeadband(m_rotationSupplier.getAsDouble(), 0.1));
 
       SmartDashboard.putString("DB/String 9", Double.toString(move_to_yaw));
-    //}
+    }
     
   // rotation snapping, restore soon and configure to a seperate button
-    /*
+
     else 
     {
       double x_offset = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
       rotationVal = rotationLimiter.calculate(
            MathUtil.applyDeadband((x_offset/-27), Constants.SwerveConstants.inputDeadband));
       }
-      */
+      
       /* 
       else {
         current_yaw = m_SwerveSubsystem.getYawDegrees();
