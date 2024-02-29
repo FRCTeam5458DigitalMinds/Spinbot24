@@ -58,7 +58,7 @@ public class OpenShoot extends Command
     {
                 SmartDashboard.putString("DB/String 2", Double.toString(timer.get()));
 
-        if (timer.get() > 1)
+        if (timer.get() > 0.75)
         {
         intake.setRollers(-50);
         shooter.runFeederWheels(85);

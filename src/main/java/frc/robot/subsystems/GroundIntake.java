@@ -75,7 +75,11 @@ public class GroundIntake extends SubsystemBase {
 
       OutputPercent /= 100.;
       rollerMotor.set(-OutputPercent);
-  
+  }
+
+  public double getPos()
+  {
+    return intakeEncoder.getPosition();
   }
   /* public void check vFinished()
   {

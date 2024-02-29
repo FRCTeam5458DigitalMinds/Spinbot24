@@ -47,10 +47,10 @@ public class Shooter extends SubsystemBase{
       currentconfig.StatorCurrentLimit = 40;
       currentconfig.StatorCurrentLimitEnable = true;
  
-      mm.MotionMagicCruiseVelocity = 130;
-      mm.MotionMagicAcceleration = 150;
-      mm.MotionMagicJerk = 45;
-    
+      mm.MotionMagicCruiseVelocity = 150;
+      mm.MotionMagicAcceleration = 115;
+      mm.MotionMagicJerk = 0;
+      
 
       shooterMotor.setPosition(0);
       flyWheelOne.setInverted(true);
@@ -113,7 +113,7 @@ public class Shooter extends SubsystemBase{
       }
       else
       {
-        shooterMotor.setControl(M_MMREQ.withPosition(m_setPoints[setPoint]).withFeedForward(m_ff).withSlot(1));
+        shooterMotor.setControl(M_MMREQ.withPosition(m_setPoints[setPoint]).withSlot(1));
       }
 
       SmartDashboard.putNumber("supposed setpoint", m_setPoints[setPoint]);
@@ -146,15 +146,13 @@ public class Shooter extends SubsystemBase{
       SmartDashboard.putString("DB/String 2", Double.toString(degrees));
 
      // final MotionMagicExpoVoltage m_PIDRequest = new MotionMagicExpoVoltage(0);
-      shooterMotor.setControl(M_MMREQ.withPosition(toTicks).withFeedForward(m_ff).withSlot(1));
+      shooterMotor.setControl(M_MMREQ.withPosition(toTicks).withSlot(1));
     }
 
     public double degreesToRotations(double degrees)
     {
       return (degrees / 360. * 218.75);
     }
-
-
     
     public double getEncoder()
     {

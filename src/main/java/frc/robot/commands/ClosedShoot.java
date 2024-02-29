@@ -62,6 +62,11 @@ public class ClosedShoot extends Command
                 if (distance >= 0) 
                 {
                     degrees = (distance - 0.65)*(1.5/.05);
+
+                    if (distance > 1.3)
+                    {
+                        degrees -= 1;
+                    }
                    // degrees = 15;
                     //degrees = 3.5;
                   //  degrees = (73.5 - (Math.atan(2.0447/distance) * (180/3.14159)));
@@ -74,16 +79,6 @@ public class ClosedShoot extends Command
                         shooter.runFeederWheels(0);
                     }
                     //intake.setRollers(-50);
-
-                }
-                else
-                {
-                    shooter.runFlyWheels(-95);
-                    shooter.toSetPoint(0);
-                    shooter.runFeederWheels(0);
-                    
-            
-                    intake.setRollers(0);
                 }
                 
                 //CALL AUTOMATIC LIMELIGHTSHOOTING HERE!!!!
@@ -112,7 +107,7 @@ public class ClosedShoot extends Command
 
         @Override
         public boolean isFinished() {
-            if (timer.get() > 1) {
+            if (timer.get() > 0.1) {
                 SmartDashboard.putString("DB/String 1", "timer good, >:(");
                 if (shooter.getV() == 0)
                 {
