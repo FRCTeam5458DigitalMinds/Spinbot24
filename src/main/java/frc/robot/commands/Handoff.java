@@ -31,34 +31,39 @@ public class Handoff extends Command{
 
     public void initialize()
     {
-        intake.toSetPoint(0);
-        shooter.toSetPoint(0);
-        intake.setRollers(-90);
-        shooter.runFeederWheels(10);
-        shooter.runFlyWheels(0);
+        if (climber.getStage() != 2)
+        {
+            intake.setRollers(-90);
+            shooter.runFeederWheels(10);
+            timer.restart();       
+            intake.toSetPoint(0);
+            shooter.toSetPoint(0);
+            shooter.runFlyWheels(0);
+        }
       //  climber.toSetPoint(0);
-
-        timer.restart();
+ 
+        
     }
 
     public void execute()
     {
-
-        isFinished();
-    }
-    
-    public boolean isFinished()
-    {
-        if (timer.get() > 2)
+        if (climber.getStage() != 2)
         {
-           intake.setRollers(0);
-           shooter.runFeederWheels(0);
+            if (timer.get() > 2)
+            {
+                intake.setRollers(0);
+                shooter.runFeederWheels(0);
 
-            
-            return true;
+                
+               
+            }
         }
-        return false;
+        else
+        {
+            shooter.runFlyWheels(-10);
+            shooter.runFeederWheels(10);
+        }
     }
-
-    
 }
+    
+    

@@ -36,8 +36,8 @@ public class Climber extends SubsystemBase {
     climbMotor_1.setIdleMode(IdleMode.kBrake);
     climbMotor_1.burnFlash();
 
-    climbMotor_1.setSmartCurrentLimit(30);
-    climbMotor_2.setSmartCurrentLimit(30);
+    climbMotor_1.setSmartCurrentLimit(80);
+    climbMotor_2.setSmartCurrentLimit(80);
 
 
     climbController = climbMotor_1.getPIDController();

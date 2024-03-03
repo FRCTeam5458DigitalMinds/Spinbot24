@@ -34,7 +34,6 @@ public class MoveClimber extends Command {
         if (setPoint == 0) 
         //down
         {
-            intake.toSetPoint(0);
             shooter.toSetPoint(0);
             shooter.runFeederWheels(0);
             shooter.runFlyWheels(0);

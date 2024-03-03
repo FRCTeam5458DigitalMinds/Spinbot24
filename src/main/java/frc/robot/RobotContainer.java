@@ -21,13 +21,13 @@ import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.Test;
 import frc.robot.commands.DeployIntake;
 import frc.robot.commands.Eject;
+import frc.robot.commands.EndHandoff;
 import frc.robot.commands.FinishShoot;
 import frc.robot.commands.Handoff;
 import frc.robot.commands.IntakeTest;
 import frc.robot.commands.MoveClimber;
 import frc.robot.commands.OpenShoot;
 import frc.robot.commands.RetractIntake;
-import frc.robot.commands.Shoot;
 import frc.robot.commands.AutoShoot;
 import frc.robot.commands.ClosedShoot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -96,7 +96,7 @@ public class RobotContainer {
   new Trigger(m_DriveController.leftBumper());
 
   private final Trigger rotation_snap_pressed =
-  new Trigger(m_DriveController.rightBumper());
+  new Trigger(m_DriveController.rightBumper());  
 
   private final Trigger strafe_snap_pressed =
   new Trigger(m_DriveController.a());
@@ -118,12 +118,16 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    NamedCommands.registerCommand("Shoot", new AutoShoot(m_Shooter, m_GroundIntake, 0));
-    NamedCommands.registerCommand("Shoot2", new AutoShoot(m_Shooter, m_GroundIntake, 1));
+    m_SwerveSubsystem.LEDoff();
+    NamedCommands.registerCommand("FarShoot", new ClosedShoot(m_Shooter, m_GroundIntake, m_Climber, m_Limelight));
+    NamedCommands.registerCommand("SubShoot", new OpenShoot(m_Shooter, m_GroundIntake));
 
-    NamedCommands.registerCommand("ShootFinish", new AutoShoot( m_Shooter, m_GroundIntake, 2));
+    NamedCommands.registerCommand("ShootFinish", new FinishShoot(m_Shooter, m_GroundIntake));
     NamedCommands.registerCommand("StopIntake", new RetractIntake(m_GroundIntake, m_Shooter, m_Climber));
     NamedCommands.registerCommand("Intake", new DeployIntake(m_GroundIntake, m_Shooter, m_Climber));
+    NamedCommands.registerCommand("RaiseElevator", new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 1));
+    NamedCommands.registerCommand("LowerElevator", new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 0));
+
     
     m_side_chooser.setDefaultOption("Blue", m_blue);
     m_side_chooser.addOption("Red", m_red);
@@ -176,12 +180,11 @@ public class RobotContainer {
    // m_DriveController.button(Button.kB.value).whileTrue(new Shoot(m_Climber, m_Shooter, m_GroundIntake, m_SwerveSubsystem, m_Limelight, 0));
     //m_DriveController.button(Button.kB.value).onFalse(new Shoot(m_Climber, m_Shooter, m_GroundIntake, m_SwerveSubsystem, m_Limelight, 2));
 
-    m_DriveController.button(Button.kX.value).onTrue(new Handoff(m_Shooter, m_GroundIntake, m_Climber));
+    m_DriveController.button(Button.kX.value).whileTrue(new Handoff(m_Shooter, m_GroundIntake, m_Climber));
+    m_DriveController.button(Button.kX.value).onFalse(new EndHandoff(m_Shooter, m_GroundIntake, m_Climber));
     m_OperatorController.button(Button.kX.value).onTrue(new Handoff(m_Shooter, m_GroundIntake, m_Climber));
     
     m_DriveController.button(Button.kY.value).onTrue(new InstantCommand(() -> m_SwerveSubsystem.zeroGyro()));
-
-    
 
     m_DriveController.povDown().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 0));
     m_DriveController.povLeft().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 1));
@@ -208,6 +211,10 @@ public class RobotContainer {
 
   }
 
+  public void turnOffLEDS()
+  {
+    m_SwerveSubsystem.LEDoff();
+  }
   public void resetWheels()
   {
     m_SwerveSubsystem.setWheelsToX();

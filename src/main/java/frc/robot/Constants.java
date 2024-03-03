@@ -64,9 +64,9 @@ public final class Constants {
 
 
     /* Drive Motor PID Values */
-    public static final double driveKP = 0.1; //to tune
+    public static final double driveKP = 0.3; //to tune
     public static final double driveKI = 0.0; //to tune
-    public static final double driveKD = 0.0; //to tune
+    public static final double driveKD = 0.05; //to tune
    public static final double driveKFF = 0.0; //to tune
 
     /* Drive Motor Characterization Values */
@@ -243,9 +243,9 @@ public final class Constants {
     //targets the errors in positioning
     public static final double kP = 0.0075;
     //targets the errors in velocity
-    public static final double kD = 0.0000;
+    public static final double kD = 0.0005;
 
-    public static final double FF = 0.00035;
+    public static final double FF = 0.00055;
 
     public static final double max_vel = 2000;
     public static final double min_vel = 0;

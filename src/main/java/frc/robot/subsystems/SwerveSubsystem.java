@@ -20,6 +20,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -29,6 +31,7 @@ public class SwerveSubsystem extends SubsystemBase {
   private final Pigeon2 pigeon;
   private final Limelight m_Limelight;
 
+  private PowerDistribution sparkPDH = new PowerDistribution(1, ModuleType.kRev);
   private SwerveDriveOdometry swerveOdometry;
   private SwerveModule[] mSwerveMods;
 
@@ -109,6 +112,16 @@ public class SwerveSubsystem extends SubsystemBase {
     mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
   }
   }
+  public void LEDon()
+  {
+    sparkPDH.setSwitchableChannel(true);
+  }
+  
+  public void LEDoff()
+  {
+    sparkPDH.setSwitchableChannel(false);
+  }
+
   public void driveRobotRelative(ChassisSpeeds chassis)
   //takes the coordinate on field wants to go to, the rotation of it, whether or not in field relative mode, and if in open loop control
   {

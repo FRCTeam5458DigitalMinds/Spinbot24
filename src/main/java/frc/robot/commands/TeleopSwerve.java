@@ -43,6 +43,7 @@ public class TeleopSwerve extends Command {
   private SlewRateLimiter strafeLimiter = new SlewRateLimiter(3.0);
   private SlewRateLimiter rotationLimiter = new SlewRateLimiter(3.0);
   private double rotationVal;
+  private double distance;
   private double translationVal;
   private double current_yaw;
   private double final_yaw;
@@ -82,6 +83,17 @@ public class TeleopSwerve extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    int cur_id = m_Limelight.getID();
+    distance = m_Limelight.find_Tag_Y_Distance(m_Limelight.findTagHeightFromID(m_Limelight.check_eligible_id(cur_id)));
+
+    if (distance < 1.52 && distance > 0)
+    {
+      m_SwerveSubsystem.LEDon();
+    }
+    else
+    {
+      m_SwerveSubsystem.LEDoff(); 
+    }
       /* Get Values, applies Deadband, (doesnt do anything if stick is less than a value)*/
       if (m_strafeSnapPressed.getAsBoolean() == false) {
         

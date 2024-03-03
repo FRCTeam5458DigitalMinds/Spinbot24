@@ -11,7 +11,9 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -21,6 +23,7 @@ public class Shooter extends SubsystemBase{
     private TalonFX shooterMotor = new TalonFX(Constants.ShooterConstants.Shooter_ID);
     private final MotionMagicVoltage M_MMREQ = new MotionMagicVoltage(0);
 
+  
     private TalonFX flyWheelOne = new TalonFX(Constants.ShooterConstants.FlyWheelOne_ID);
     private TalonFX flyWheelTwo = new TalonFX(Constants.ShooterConstants.FlyWheelTwo_ID);
     private TalonFX feederWheel = new TalonFX(Constants.ShooterConstants.FeederWheel_ID);
@@ -167,6 +170,7 @@ public class Shooter extends SubsystemBase{
       SmartDashboard.putString("DB/String 9", Double.toString(OutputPercent));
       flyWheelOne.set(OutputPercent);
     }
+    
 
     public void runFeederWheels(double OutputPercent)
     {

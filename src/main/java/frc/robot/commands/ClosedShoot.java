@@ -61,13 +61,32 @@ public class ClosedShoot extends Command
 
                 if (distance >= 0) 
                 {
-                    degrees = (distance - 0.65)*(1.5/.05);
+                    degrees = (distance - 0.655)*(1.5/.05);
 
-                    if (distance > 1.3)
+                    if (distance > 1.1)
                     {
-                        degrees -= 1;
-                    }
-                   // degrees = 15;
+                        degrees += 0;        
+                    }      
+                    if (distance > 1.2)
+                    {
+                        degrees -= 0.5;        
+                    } 
+                    if (distance > 1.27)
+                    {
+                        degrees -= 1;        
+                    } 
+                    if (distance > 1.33)
+                    {
+                        degrees -= 0.5;        
+                    }      
+                    if (distance > 1.37)
+                    {
+                        degrees -= 0.5;        
+                    }         
+                    if (distance > 1.45)
+                    {
+                        degrees -= 1;        
+                    }          // degrees = 15;
                     //degrees = 3.5;
                   //  degrees = (73.5 - (Math.atan(2.0447/distance) * (180/3.14159)));
                     if (degrees < 40 && degrees >= 0)
@@ -108,14 +127,16 @@ public class ClosedShoot extends Command
         @Override
         public boolean isFinished() {
             if (timer.get() > 0.1) {
+                
                 SmartDashboard.putString("DB/String 1", "timer good, >:(");
-                if (shooter.getV() == 0)
+                if (shooter.getV() == 0 && distance > -1)
                 {
+                    
                     SmartDashboard.putString("DB/String 1", "good!");
 
                     shooter.runFeederWheels(85);
                     intake.setRollers(-50);
-
+                    
                     return true;
                 }
             }
