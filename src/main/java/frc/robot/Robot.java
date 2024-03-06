@@ -84,6 +84,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     System.out.println("Auto Command:" + m_autonomousCommand);
+    SmartDashboard.putBoolean("Red?", m_robotContainer.getSide() == "Red");
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();

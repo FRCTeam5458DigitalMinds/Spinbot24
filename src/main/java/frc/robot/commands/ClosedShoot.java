@@ -61,7 +61,7 @@ public class ClosedShoot extends Command
 
                 if (distance >= 0) 
                 {
-                    degrees = (distance - 0.655)*(1.5/.05);
+                    degrees = (distance - 0.6545)*(1.5/.05);
 
                     if (distance > 1.1)
                     {
@@ -69,15 +69,19 @@ public class ClosedShoot extends Command
                     }      
                     if (distance > 1.2)
                     {
+                        degrees -= 0.75;        
+                    } 
+                    if (distance > 1.265)
+                    {
                         degrees -= 0.5;        
                     } 
-                    if (distance > 1.27)
+                    if (distance > 1.28)
                     {
-                        degrees -= 1;        
+                        degrees -= 0.5;        
                     } 
                     if (distance > 1.33)
                     {
-                        degrees -= 0.5;        
+                        degrees -= 1.5;        
                     }      
                     if (distance > 1.37)
                     {

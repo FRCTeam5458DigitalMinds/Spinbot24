@@ -85,8 +85,8 @@ public class TeleopSwerve extends Command {
   public void execute() {
     int cur_id = m_Limelight.getID();
     distance = m_Limelight.find_Tag_Y_Distance(m_Limelight.findTagHeightFromID(m_Limelight.check_eligible_id(cur_id)));
-
-    if (distance < 1.52 && distance > 0)
+    double tx = Math.abs(m_Limelight.findXOffset());
+    if (distance < 1.52 && distance > 0 && tx < 15)
     {
       m_SwerveSubsystem.LEDon();
     }
