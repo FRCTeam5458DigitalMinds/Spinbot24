@@ -45,7 +45,7 @@ public class GroundIntake extends SubsystemBase {
     intakeMotor.setSmartCurrentLimit(30);
 
     intakeController = intakeMotor.getPIDController();
-
+    intakeEncoder.setPosition(0);
     intakeController.setP(Constants.IntakeConstants.kP);
     intakeController.setI(Constants.IntakeConstants.kI);
     intakeController.setD(Constants.IntakeConstants.kD);

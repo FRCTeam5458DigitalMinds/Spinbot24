@@ -28,6 +28,7 @@ import frc.robot.commands.IntakeTest;
 import frc.robot.commands.MoveClimber;
 import frc.robot.commands.OpenShoot;
 import frc.robot.commands.RetractIntake;
+import frc.robot.commands.AutoFinish;
 import frc.robot.commands.AutoShoot;
 import frc.robot.commands.ClosedShoot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -84,6 +85,8 @@ public class RobotContainer {
 
   //public final SendableChooser<Command> m_chooser;
   public final SendableChooser<String> m_side_chooser = new SendableChooser<>();
+  public final SendableChooser<String> silly_chooser = new SendableChooser<>();
+
   public final SendableChooser<Command> m_auto_chooser;
 
 // 
@@ -122,7 +125,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("FarShoot", new ClosedShoot(m_Shooter, m_GroundIntake, m_Climber, m_Limelight));
     NamedCommands.registerCommand("SubShoot", new OpenShoot(m_Shooter, m_GroundIntake));
 
-    NamedCommands.registerCommand("ShootFinish", new FinishShoot(m_Shooter, m_GroundIntake));
+    NamedCommands.registerCommand("ShootFinish", new AutoFinish(m_Shooter, m_GroundIntake, m_Climber));
     NamedCommands.registerCommand("StopIntake", new RetractIntake(m_GroundIntake, m_Shooter, m_Climber));
     NamedCommands.registerCommand("Intake", new DeployIntake(m_GroundIntake, m_Shooter, m_Climber));
     NamedCommands.registerCommand("RaiseElevator", new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 1));
@@ -132,12 +135,16 @@ public class RobotContainer {
     m_side_chooser.setDefaultOption("Blue", m_blue);
     m_side_chooser.addOption("Red", m_red);
     m_auto_chooser = AutoBuilder.buildAutoChooser();
+    silly_chooser.setDefaultOption("normal offset", "1");
+    silly_chooser.addOption("higher", "2");
+    silly_chooser.addOption("lower", "3");
 
    // m_auto_chooser.setDefaultOption("Four Note Score", FourNoteAuto);
    // SmartDashboard.putData("Example Path (may not work)", new PathPlannerAuto("4Note_Auto"));
 
    // SmartDashboard.putData("Auto Choices:", m_auto_chooser);
     SmartDashboard.putData("Side", m_side_chooser);
+    SmartDashboard.putData("offset", silly_chooser);
    // SmartDashboard.putData("Path", m_auto_chooser);
     
 
@@ -198,9 +205,9 @@ public class RobotContainer {
     m_DriveController.button(Button.kB.value).onFalse(new Eject(m_GroundIntake, 1));
 
     m_DriveController.button(Button.kRightBumper.value).onTrue(new ClosedShoot(m_Shooter, m_GroundIntake, m_Climber, m_Limelight));
-    m_DriveController.button(Button.kRightBumper.value).onFalse(new FinishShoot(m_Shooter, m_GroundIntake));
+    m_DriveController.button(Button.kRightBumper.value).onFalse(new FinishShoot(m_Shooter, m_GroundIntake, m_Climber));
     m_DriveController.axisGreaterThan(3, 0).onTrue(new OpenShoot( m_Shooter, m_GroundIntake));
-    m_DriveController.axisGreaterThan(3, 0).onFalse(new FinishShoot(m_Shooter, m_GroundIntake));
+    m_DriveController.axisGreaterThan(3, 0).onFalse(new FinishShoot(m_Shooter, m_GroundIntake, m_Climber));
 
     
     m_DriveController.axisGreaterThan(2, 0).whileTrue(new DeployIntake(m_GroundIntake, m_Shooter, m_Climber));

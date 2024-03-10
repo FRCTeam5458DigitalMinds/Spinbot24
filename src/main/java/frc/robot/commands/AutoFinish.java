@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.Timer;
 import java.util.HashMap;
 
-public class FinishShoot extends Command
+public class AutoFinish extends Command
 {
    
     Timer timer = new Timer();
@@ -28,7 +28,7 @@ public class FinishShoot extends Command
     //  private double podium_degrees = 33.333;
     //  private double subwoofer_degrees = 65.662787;
 
-    public FinishShoot(Shooter m_Shooter, GroundIntake m_Intake, Climber Elevator) 
+    public AutoFinish(Shooter m_Shooter, GroundIntake m_Intake, Climber Elevator) 
     {
         this.shooter = m_Shooter;
         this.intake = m_Intake;
@@ -45,7 +45,6 @@ public class FinishShoot extends Command
             shooter.toSetPoint(0);
         }
         shooter.runFeederWheels(0);
-        shooter.runFlyWheels(0);
         intake.setRollers(0);
 
         isFinished();

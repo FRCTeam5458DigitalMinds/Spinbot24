@@ -43,7 +43,7 @@ public class Limelight extends SubsystemBase
             double m_y_angleToTagDegrees = Constants.LimelightConstants.m_limelightMountAngleDegree + m_y_AngleOffset;
             double m_y_angleToTagRadians = m_y_angleToTagDegrees * (3.14159 / 180.);
 
-            double m_limelightToTagInches = ((tagHeight - Constants.LimelightConstants.m_limelightLensHeightInches) / Math.tan(m_y_angleToTagRadians)) - Constants.LimelightConstants.m_limelightToFrontOfRobot;
+            double m_limelightToTagInches = ((tagHeight - Constants.LimelightConstants.m_limelightLensHeightInches) / Math.tan(m_y_angleToTagRadians));
 
             return Math.abs(m_limelightToTagInches /= 39.37);
         }

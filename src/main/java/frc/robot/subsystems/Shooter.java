@@ -29,7 +29,7 @@ public class Shooter extends SubsystemBase{
     private TalonFX feederWheel = new TalonFX(Constants.ShooterConstants.FeederWheel_ID);
 
     private double intakeHandoff = 18;
-    private double climbingPosition = 39.2;
+    private double climbingPosition = 47.274;
     private double ampPosition = 50;
     private double m_ff;
 
@@ -57,7 +57,7 @@ public class Shooter extends SubsystemBase{
 
       shooterMotor.setPosition(0);
       flyWheelOne.setInverted(true);
-      flyWheelTwo.setControl(new Follower(13, false));
+     // flyWheelTwo.setControl(new Follower(13, false));
     
      // feederWheel.getConfigurator().apply(new VoltageConfigs());
 
@@ -163,12 +163,20 @@ public class Shooter extends SubsystemBase{
     }
     public void runFlyWheels(double OutputPercent)
     {
-
+      double difference = 0.05;
       SmartDashboard.putNumber("fly wheels", OutputPercent);
 
       OutputPercent /= 100.;
       SmartDashboard.putString("DB/String 9", Double.toString(OutputPercent));
+      if (OutputPercent < 0)
+      {
+        difference = -difference;
+      } else if (OutputPercent == 0)
+      {
+        difference = 0;
+      }
       flyWheelOne.set(OutputPercent);
+      flyWheelTwo.set(OutputPercent);
     }
     
 

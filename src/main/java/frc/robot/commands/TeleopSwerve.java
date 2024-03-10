@@ -86,7 +86,7 @@ public class TeleopSwerve extends Command {
     int cur_id = m_Limelight.getID();
     distance = m_Limelight.find_Tag_Y_Distance(m_Limelight.findTagHeightFromID(m_Limelight.check_eligible_id(cur_id)));
     double tx = Math.abs(m_Limelight.findXOffset());
-    if (distance < 1.52 && distance > 0 && tx < 15)
+    if (distance < 1.5 && distance > 0 && tx < 20)
     {
       m_SwerveSubsystem.LEDon();
     }
@@ -131,9 +131,20 @@ public class TeleopSwerve extends Command {
     else 
     {
       double x_offset = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+
+      if (cur_id == 4 || cur_id == 7)
+      {
       rotationVal = rotationLimiter.calculate(
            MathUtil.applyDeadband((x_offset/-27), Constants.SwerveConstants.inputDeadband));
       }
+    
+      /*
+      else if (cur_id == 3 || cur_id == 7)
+      {
+        rotationVal = rotationLimiter.calculate(
+        MathUtil.applyDeadband((x_offset/-27), Constants.SwerveConstants.inputDeadband));
+      } */
+    }
       
       /* 
       else {

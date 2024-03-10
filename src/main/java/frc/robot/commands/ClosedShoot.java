@@ -56,41 +56,54 @@ public class ClosedShoot extends Command
                 int cur_id = limelight.getID();
                 SmartDashboard.putNumber("cur ID", cur_id);
                 distance = limelight.find_Tag_Y_Distance(limelight.findTagHeightFromID(limelight.check_eligible_id(cur_id)));
+               // SmartDashboard.putNumber("x distance", 1.32)
                 SmartDashboard.putString("distance", Double.toString(distance));
                 SmartDashboard.putString("DB/String 8", "auto");
+               // String off_string = SmartDashboard.get("offset", );
 
+                
                 if (distance >= 0) 
                 {
-                    degrees = (distance - 0.6545)*(1.5/.05);
+                    //B2 .645
+                    //
+                    //
+                    degrees = (distance - 0.5)*(1.5/.05);
 
-                    if (distance > 1.1)
+                    if (distance > 1)
                     {
-                        degrees += 0;        
-                    }      
-                    if (distance > 1.2)
+                        if (distance < 1.1 && distance > 1.0)
+                        {
+                            degrees += 2;        
+                        }      
+                        if (distance > 1.2)
+                        {
+                            degrees -= 0.5;        
+                        } 
+                        if (distance > 1.28)
+                        {
+                            degrees -= 0.5;        
+                        } 
+                        if (distance > 1.33)
+                        {
+                            degrees -= .3;        
+                        }      
+                        if (distance > 1.36)
+                        {
+                            degrees -= 0.5;        
+                        }         
+                        if (distance > 1.42)
+                        {
+                            degrees -= 0.5;        
+                        }   
+                        if (distance > 1.45)
+                        {
+                            degrees -= 0.25;        
+                        }    
+                    }
+                    else
                     {
-                        degrees -= 0.75;        
-                    } 
-                    if (distance > 1.265)
-                    {
-                        degrees -= 0.5;        
-                    } 
-                    if (distance > 1.28)
-                    {
-                        degrees -= 0.5;        
-                    } 
-                    if (distance > 1.33)
-                    {
-                        degrees -= 1.5;        
-                    }      
-                    if (distance > 1.37)
-                    {
-                        degrees -= 0.5;        
-                    }         
-                    if (distance > 1.45)
-                    {
-                        degrees -= 1;        
-                    }          // degrees = 15;
+                        degrees += 1;
+                    }      // degrees = 15;
                     //degrees = 3.5;
                   //  degrees = (73.5 - (Math.atan(2.0447/distance) * (180/3.14159)));
                     if (degrees < 40 && degrees >= 0)
@@ -115,8 +128,8 @@ public class ClosedShoot extends Command
             else 
             {
                 intake.setRollers(0);
-                shooter.runFlyWheels(-50);
-                shooter.runFeederWheels(-50);
+                shooter.runFlyWheels(15);
+                shooter.runFeederWheels(-15);
             }
             SmartDashboard.putString("DB/String 1", "closed shoot");
 
@@ -130,19 +143,26 @@ public class ClosedShoot extends Command
 
         @Override
         public boolean isFinished() {
-            if (timer.get() > 0.1) {
-                
-                SmartDashboard.putString("DB/String 1", "timer good, >:(");
-                if (shooter.getV() == 0 && distance > -1)
-                {
+            if (climber.getStage() == 0)
+            {
+                if (timer.get() > 0.1) {
                     
-                    SmartDashboard.putString("DB/String 1", "good!");
+                    SmartDashboard.putString("DB/String 1", "timer good, >:(");
+                    if (shooter.getV() == 0 && distance > -1)
+                    {
+                        
+                        SmartDashboard.putString("DB/String 1", "good!");
 
-                    shooter.runFeederWheels(85);
-                    intake.setRollers(-50);
-                    
-                    return true;
+                        shooter.runFeederWheels(85);
+                        intake.setRollers(-50);
+                        
+                        return true;
+                    }
                 }
+            }
+            else 
+            {
+                return true;
             }
             return false;
         }
