@@ -125,7 +125,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("FarShoot", new ClosedShoot(m_Shooter, m_GroundIntake, m_Climber, m_Limelight));
     NamedCommands.registerCommand("SubShoot", new OpenShoot(m_Shooter, m_GroundIntake));
 
-    NamedCommands.registerCommand("ShootFinish", new AutoFinish(m_Shooter, m_GroundIntake, m_Climber));
+    NamedCommands.registerCommand("ShootFinish", new FinishShoot(m_Shooter, m_GroundIntake, m_Climber));
     NamedCommands.registerCommand("StopIntake", new RetractIntake(m_GroundIntake, m_Shooter, m_Climber));
     NamedCommands.registerCommand("Intake", new DeployIntake(m_GroundIntake, m_Shooter, m_Climber));
     NamedCommands.registerCommand("RaiseElevator", new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 1));

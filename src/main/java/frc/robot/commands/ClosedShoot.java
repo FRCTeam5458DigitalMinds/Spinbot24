@@ -21,7 +21,7 @@ public class ClosedShoot extends Command
 {
    
     Timer timer = new Timer();
-    
+    double offset = 0.54;
     double distance;
     double degrees;
 
@@ -66,14 +66,15 @@ public class ClosedShoot extends Command
                 {
                     //B2 .645
                     //
-                    //
-                    degrees = (distance - 0.5)*(1.5/.05);
+                   
+                    
+                    degrees = (distance - offset)*(1.5/.05);
 
                     if (distance > 1)
                     {
                         if (distance < 1.1 && distance > 1.0)
                         {
-                            degrees += 2;        
+                            degrees += 0.5;        
                         }      
                         if (distance > 1.2)
                         {
@@ -83,22 +84,19 @@ public class ClosedShoot extends Command
                         {
                             degrees -= 0.5;        
                         } 
+                        if (distance > 1.3)
+                        {
+                            degrees -= 0.5;        
+                        } 
                         if (distance > 1.33)
                         {
-                            degrees -= .3;        
-                        }      
-                        if (distance > 1.36)
+                            degrees -= .4;        
+                        }             
+                        if (distance > 1.38)
                         {
-                            degrees -= 0.5;        
-                        }         
-                        if (distance > 1.42)
-                        {
-                            degrees -= 0.5;        
-                        }   
-                        if (distance > 1.45)
-                        {
-                            degrees -= 0.25;        
-                        }    
+                            degrees -= 0.5;  
+                        }
+                          
                     }
                     else
                     {
@@ -106,7 +104,7 @@ public class ClosedShoot extends Command
                     }      // degrees = 15;
                     //degrees = 3.5;
                   //  degrees = (73.5 - (Math.atan(2.0447/distance) * (180/3.14159)));
-                    if (degrees < 40 && degrees >= 0)
+                    if (degrees < 50 && degrees >= 0)
                     {
                         SmartDashboard.putNumber("degrees", degrees);
                         SmartDashboard.putNumber("Command finished", degrees / 360. * 218.75);

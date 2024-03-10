@@ -45,6 +45,7 @@ public class Limelight extends SubsystemBase
 
             double m_limelightToTagInches = ((tagHeight - Constants.LimelightConstants.m_limelightLensHeightInches) / Math.tan(m_y_angleToTagRadians));
 
+            
             return Math.abs(m_limelightToTagInches /= 39.37);
         }
         return -1;
