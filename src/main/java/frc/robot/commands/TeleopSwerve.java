@@ -135,7 +135,7 @@ public class TeleopSwerve extends Command {
       if (cur_id == 4 || cur_id == 7)
       {
       rotationVal = rotationLimiter.calculate(
-           MathUtil.applyDeadband((x_offset/-27), 0.1));
+           MathUtil.applyDeadband((x_offset/-27), 0.15));
       }
     
       /*

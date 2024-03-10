@@ -30,6 +30,7 @@ import frc.robot.commands.OpenShoot;
 import frc.robot.commands.RetractIntake;
 import frc.robot.commands.AutoFinish;
 import frc.robot.commands.AutoShoot;
+import frc.robot.commands.ChangeOffset;
 import frc.robot.commands.ClosedShoot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -124,7 +125,7 @@ public class RobotContainer {
     m_SwerveSubsystem.LEDoff();
     NamedCommands.registerCommand("FarShoot", new ClosedShoot(m_Shooter, m_GroundIntake, m_Climber, m_Limelight));
     NamedCommands.registerCommand("SubShoot", new OpenShoot(m_Shooter, m_GroundIntake));
-
+    
     NamedCommands.registerCommand("ShootFinish", new FinishShoot(m_Shooter, m_GroundIntake, m_Climber));
     NamedCommands.registerCommand("StopIntake", new RetractIntake(m_GroundIntake, m_Shooter, m_Climber));
     NamedCommands.registerCommand("Intake", new DeployIntake(m_GroundIntake, m_Shooter, m_Climber));
@@ -191,8 +192,14 @@ public class RobotContainer {
     m_DriveController.button(Button.kX.value).onFalse(new EndHandoff(m_Shooter, m_GroundIntake, m_Climber));
     m_OperatorController.button(Button.kX.value).onTrue(new Handoff(m_Shooter, m_GroundIntake, m_Climber));
     
+    m_DriveController.button(Button.kBack.value).onTrue(new ChangeOffset(-1));
+    m_DriveController.button(Button.kStart.value).onTrue(new ChangeOffset(1));
+    m_DriveController.button(Button.kRightStick.value).onTrue(new ChangeOffset(2));
+
+
     m_DriveController.button(Button.kY.value).onTrue(new InstantCommand(() -> m_SwerveSubsystem.zeroGyro()));
 
+    /* 
     m_DriveController.povDown().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 0));
     m_DriveController.povLeft().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 1));
     m_DriveController.povUp().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 2));
@@ -200,7 +207,7 @@ public class RobotContainer {
     m_OperatorController.povDown().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 0));
     m_OperatorController.povLeft().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 1));
     m_OperatorController.povUp().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 2));
-
+    */
     m_DriveController.button(Button.kB.value).onTrue(new Eject(m_GroundIntake, 0));
     m_DriveController.button(Button.kB.value).onFalse(new Eject(m_GroundIntake, 1));
 

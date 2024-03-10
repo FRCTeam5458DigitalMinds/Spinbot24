@@ -21,7 +21,7 @@ public class ClosedShoot extends Command
 {
    
     Timer timer = new Timer();
-    double offset = 0.54;
+    double offset = SmartDashboard.getNumber("offset", 0.40);
     double distance;
     double degrees;
 
@@ -67,14 +67,14 @@ public class ClosedShoot extends Command
                     //B2 .645
                     //
                    
-                    
+                    offset = SmartDashboard.getNumber("offset", 0.40);
                     degrees = (distance - offset)*(1.5/.05);
 
                     if (distance > 1)
                     {
                         if (distance < 1.1 && distance > 1.0)
                         {
-                            degrees += 0.5;        
+                            degrees += 2.5;        
                         }      
                         if (distance > 1.2)
                         {
@@ -112,7 +112,7 @@ public class ClosedShoot extends Command
                         shooter.runFlyWheels(-95);
                         shooter.runFeederWheels(0);
                     }
-                    //intake.setRollers(-50);
+                    //intake.setRollers(-50); 
                 }
                 
                 //CALL AUTOMATIC LIMELIGHTSHOOTING HERE!!!!
