@@ -16,11 +16,11 @@ public class ChangeOffset extends Command{
     {
         if (setpoint != 2)
         {
-            offset = SmartDashboard.getNumber("offset", 0.40);
+            offset = SmartDashboard.getNumber("offset", 0.46);
             SmartDashboard.putNumber("offset", offset + 0.01 * setpoint);
             isFinished();
         } else {
-            SmartDashboard.putNumber("offset", 0.40);
+            SmartDashboard.putNumber("offset", 0.46);
         }
     }
 

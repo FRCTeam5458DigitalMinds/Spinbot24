@@ -126,6 +126,11 @@ public class RobotContainer {
     NamedCommands.registerCommand("FarShoot", new ClosedShoot(m_Shooter, m_GroundIntake, m_Climber, m_Limelight));
     NamedCommands.registerCommand("SubShoot", new OpenShoot(m_Shooter, m_GroundIntake));
     
+    NamedCommands.registerCommand("L_FarShoot", new AutoShoot(m_Shooter, m_GroundIntake, 0));
+    NamedCommands.registerCommand("R_FarShoot", new AutoShoot(m_Shooter, m_GroundIntake, 2));
+    NamedCommands.registerCommand("M_FarShoot", new AutoShoot(m_Shooter, m_GroundIntake, 1));
+
+
     NamedCommands.registerCommand("ShootFinish", new FinishShoot(m_Shooter, m_GroundIntake, m_Climber));
     NamedCommands.registerCommand("StopIntake", new RetractIntake(m_GroundIntake, m_Shooter, m_Climber));
     NamedCommands.registerCommand("Intake", new DeployIntake(m_GroundIntake, m_Shooter, m_Climber));
@@ -199,7 +204,7 @@ public class RobotContainer {
 
     m_DriveController.button(Button.kY.value).onTrue(new InstantCommand(() -> m_SwerveSubsystem.zeroGyro()));
 
-    /* 
+    
     m_DriveController.povDown().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 0));
     m_DriveController.povLeft().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 1));
     m_DriveController.povUp().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 2));
@@ -207,7 +212,7 @@ public class RobotContainer {
     m_OperatorController.povDown().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 0));
     m_OperatorController.povLeft().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 1));
     m_OperatorController.povUp().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 2));
-    */
+    
     m_DriveController.button(Button.kB.value).onTrue(new Eject(m_GroundIntake, 0));
     m_DriveController.button(Button.kB.value).onFalse(new Eject(m_GroundIntake, 1));
 

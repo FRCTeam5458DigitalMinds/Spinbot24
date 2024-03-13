@@ -38,14 +38,21 @@ public class Shooter extends SubsystemBase{
   /** Creates a new ExampleSubsyste m. */
     public Shooter() {
       TalonFXConfiguration cfg = new TalonFXConfiguration();
+      TalonFXConfiguration feed_cur = new TalonFXConfiguration();
+
       MotionMagicConfigs mm = cfg.MotionMagic;
+      MotionMagicConfigs mm2 = feed_cur.MotionMagic;
 
       TalonFXConfiguration fig = new TalonFXConfiguration();
       CurrentLimitsConfigs currentconfig = fig.CurrentLimits;
       CurrentLimitsConfigs curconfig = cfg.CurrentLimits;
+      CurrentLimitsConfigs feederconfig = feed_cur.CurrentLimits;
 
       curconfig.StatorCurrentLimit = 40;
       curconfig.StatorCurrentLimitEnable = true;
+
+      feederconfig.StatorCurrentLimit = 55;
+      feederconfig.StatorCurrentLimitEnable = true;
 
       currentconfig.StatorCurrentLimit = 40;
       currentconfig.StatorCurrentLimitEnable = true;
@@ -53,6 +60,10 @@ public class Shooter extends SubsystemBase{
       mm.MotionMagicCruiseVelocity = 150;
       mm.MotionMagicAcceleration = 115;
       mm.MotionMagicJerk = 0;
+
+      mm2.MotionMagicCruiseVelocity = 150;
+      mm2.MotionMagicAcceleration = 115;
+      mm2.MotionMagicJerk = 0;
       
 
       shooterMotor.setPosition(0);
@@ -84,7 +95,7 @@ public class Shooter extends SubsystemBase{
       shooterMotor.getConfigurator().apply(cfg);
       flyWheelOne.getConfigurator().apply(cfg);
       flyWheelTwo.getConfigurator().apply(cfg);
-      feederWheel.getConfigurator().apply(cfg);
+      feederWheel.getConfigurator().apply(feed_cur);
 
       shooterMotor.getConfigurator().apply(slot0Configs, 0.20);
   
@@ -130,6 +141,11 @@ public class Shooter extends SubsystemBase{
       shooterMotor.set(0.05);
       SmartDashboard.putNumber("supposed output", shooterMotor.get());
 
+    }
+    public void toAutoSetpoint(int index)
+    {
+      double[] autosetpoints = {0, 0, 0};
+      toCustomSetpoint(autosetpoints[index]);
     }
     public void stopControl()
     {

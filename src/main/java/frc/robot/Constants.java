@@ -245,7 +245,7 @@ public final class Constants {
     //targets the errors in velocity
     public static final double kD = 0.0005;
 
-    public static final double FF = 0.00065;
+    public static final double FF = 0.0008;
 
     public static final double max_vel = 2000;
     public static final double min_vel = 0;
