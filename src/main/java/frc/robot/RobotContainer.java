@@ -28,6 +28,7 @@ import frc.robot.commands.IntakeTest;
 import frc.robot.commands.MoveClimber;
 import frc.robot.commands.OpenShoot;
 import frc.robot.commands.RetractIntake;
+import frc.robot.commands.AutoDeployIntake;
 import frc.robot.commands.AutoFinish;
 import frc.robot.commands.AutoShoot;
 import frc.robot.commands.ChangeOffset;
@@ -106,6 +107,8 @@ public class RobotContainer {
   new Trigger(m_DriveController.a());
 
   public final boolean blueOrNot = true;
+
+
   //path planner
 
   
@@ -133,7 +136,7 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("ShootFinish", new FinishShoot(m_Shooter, m_GroundIntake, m_Climber));
     NamedCommands.registerCommand("StopIntake", new RetractIntake(m_GroundIntake, m_Shooter, m_Climber));
-    NamedCommands.registerCommand("Intake", new DeployIntake(m_GroundIntake, m_Shooter, m_Climber));
+    NamedCommands.registerCommand("Intake", new AutoDeployIntake(m_GroundIntake, m_Shooter, m_Climber));
     NamedCommands.registerCommand("RaiseElevator", new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 1));
     NamedCommands.registerCommand("LowerElevator", new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 0));
 
@@ -161,6 +164,7 @@ public class RobotContainer {
           () -> -m_DriveController.getRawAxis(translationAxis),
           () -> -m_DriveController.getRawAxis(strafeAxis),
           () -> -m_DriveController.getRawAxis(rotationAxis),
+          () -> m_DriveController.getRawAxis(XboxController.Axis.kLeftTrigger.value),
           () -> robotCentric.getAsBoolean(),
           () -> rotation_snap_pressed.getAsBoolean(),
           () -> strafe_snap_pressed.getAsBoolean(),
@@ -187,7 +191,7 @@ public class RobotContainer {
 
    // m_DriveController.button(kButton.kY.value).onTrue(new IntakeTest(m_GroundIntake, 1));
    // m_DriveController.button(Button.kY.value).onTrue(new IntakeTest(m_GroundIntake, 1));
-    m_DriveController.button(Button.kA.value).onTrue(new IntakeTest(m_GroundIntake));
+   // m_DriveController.button(Button.kA.value).onTrue(new InstantCommand(() -> resetWheels()));
     
    // m_DriveController.button(Button.kA.value).onTrue(new Shoot(m_Climber, m_Shooter, m_GroundIntake, m_SwerveSubsystem, m_Limelight, 0));
    // m_DriveController.button(Button.kB.value).whileTrue(new Shoot(m_Climber, m_Shooter, m_GroundIntake, m_SwerveSubsystem, m_Limelight, 0));
@@ -222,7 +226,9 @@ public class RobotContainer {
     m_DriveController.axisGreaterThan(3, 0).onFalse(new FinishShoot(m_Shooter, m_GroundIntake, m_Climber));
 
     
-    m_DriveController.axisGreaterThan(2, 0).whileTrue(new DeployIntake(m_GroundIntake, m_Shooter, m_Climber));
+    m_DriveController.axisGreaterThan(2, 0.05).onTrue(new DeployIntake(m_GroundIntake, m_Shooter, m_Climber).until(m_DriveController.axisLessThan(2, 0.02)));
+    //m_DriveController.axisGreaterThan(2, 0).whileTrue(new AutoDeployIntake(m_GroundIntake, m_Shooter, m_Climber));
+
     m_DriveController.axisGreaterThan(2, 0).onFalse(new RetractIntake(m_GroundIntake, m_Shooter, m_Climber));
     
    // m_DriveController.button(Button.kA.value).onTrue(new InstantCommand(() -> m_Limelight.LimeToDrive()));

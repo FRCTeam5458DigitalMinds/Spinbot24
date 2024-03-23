@@ -57,7 +57,7 @@ public class ClosedShoot extends Command
                 SmartDashboard.putNumber("cur ID", cur_id);
                 distance = limelight.find_Tag_Y_Distance(limelight.findTagHeightFromID(limelight.check_eligible_id(cur_id)));
                // SmartDashboard.putNumber("x distance", 1.32)
-                SmartDashboard.putString("distance", Double.toString(limelight.findYOffset()));
+                SmartDashboard.putString("distance", Double.toString(distance));
                 SmartDashboard.putString("DB/String 8", "auto");
                // String off_string = SmartDashboard.get("offset", );
 

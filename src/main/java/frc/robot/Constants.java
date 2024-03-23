@@ -87,6 +87,9 @@ public final class Constants {
     public static final double autoacceleration = 3;
     public static final double maxAngularVelocity = 15.7; //
 
+    public static final double m_maxAngularVelocity = 6.283;
+    public static final double m_maxAngularAcceleation = Math.pow(m_maxAngularVelocity, 1.5);
+
     /* Neutral Modes */
     public static final IdleMode angleNeutralMode = IdleMode.kBrake;
     public static final IdleMode driveNeutralMode = IdleMode.kBrake;

@@ -49,14 +49,14 @@ public class OpenShoot extends Command
     public void execute() 
     {
         
-            SmartDashboard.putNumber("time", timer.get());
-            isFinished();
+        SmartDashboard.putNumber("time", timer.get());
+        isFinished();
         
     }
 
     public boolean isFinished()
     {
-                SmartDashboard.putString("DB/String 2", Double.toString(timer.get()));
+        SmartDashboard.putString("DB/String 2", Double.toString(timer.get()));
 
         if (timer.get() > 0.75)
         {

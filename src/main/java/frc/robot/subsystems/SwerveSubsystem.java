@@ -139,6 +139,10 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
  
+  public double rotationRads()
+  {
+    return getPose().getRotation().getRadians();
+  }
   /* Used by SwerveControllerCommand in Auto */
   public void setModuleStates(SwerveModuleState[] desiredStates)
   {

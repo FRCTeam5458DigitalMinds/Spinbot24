@@ -8,12 +8,14 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
 public class GroundIntake extends SubsystemBase {
-  private double deployPosition = -36.8;
+  private double deployPosition = -36;
   private double climbingPosition = -13.104;
   private double origin = -2.37225;
   private double ejectPosition = -27;
@@ -27,6 +29,8 @@ public class GroundIntake extends SubsystemBase {
   private CANSparkMax intakeMotor;
   private CANSparkMax rollerMotor;
   private final TimeOfFlight m_rangeSensor = new TimeOfFlight(0);
+  private double filteredCurrent;
+
 
 
 
@@ -77,6 +81,26 @@ public class GroundIntake extends SubsystemBase {
       rollerMotor.set(-OutputPercent);
   }
 
+  public double voltageOutput()
+  {
+    SmartDashboard.putNumber("applied output", rollerMotor.getAppliedOutput());
+    SmartDashboard.putNumber("bus voltage", rollerMotor.getBusVoltage());
+    SmartDashboard.putNumber("output current", rollerMotor.getOutputCurrent());
+    
+    //return intakeMotor.getAppliedOutput();
+    return rollerMotor.getOutputCurrent();
+
+  }
+
+  public double getCurrent() {
+    return intakeMotor.getOutputCurrent();
+  }
+
+  public double getFilteredCurrent() {
+    return filteredCurrent;
+  }
+
+
   public double getPos()
   {
     return intakeEncoder.getPosition();
@@ -118,6 +142,32 @@ public class GroundIntake extends SubsystemBase {
     SmartDashboard.putNumber("space, time (of flight)", intakedistance);
     return intakedistance;
   }
+
+   
+  /*
+  public CommandBase intakenoteCommand() {
+    Debouncer debounce = new Debouncer(1, Debouncer.DebounceType.kRising);
+    // Open arms
+    return runOnce(
+            () -> {
+              debounce.calculate(false);
+              this.open();
+            })
+        // set the intake to cube intaking speed
+        .andThen(
+            run(() -> {
+                  setRollers(6);
+                })
+                // Wait until current spike is detected for more than 1s
+                .until(() -> debounce.calculate(getFilteredCurrent() > 15)))
+        // Reduce motor power to holding power
+        .finallyDo(
+            (interrupted) -> {
+              System.out.println("ended");
+              setRollers(6);
+            });
+  }
+  */
   /* protected void interrupted()
   {
    

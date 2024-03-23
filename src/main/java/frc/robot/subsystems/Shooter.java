@@ -120,15 +120,10 @@ public class Shooter extends SubsystemBase{
 
    //   shooterMotor.get
       //inal MotionMagicExpoVoltage m_PIDRequest = new MotionMagicExpoVoltage(0).withSlot(0);
-      if (setPoint == 0) 
-      {
+      
 
-        shooterMotor.setControl(M_MMREQ.withPosition(m_setPoints[setPoint]).withSlot(1));
-      }
-      else
-      {
-        shooterMotor.setControl(M_MMREQ.withPosition(m_setPoints[setPoint]).withSlot(1));
-      }
+      shooterMotor.setControl(M_MMREQ.withPosition(m_setPoints[setPoint]).withSlot(1));
+      
 
       SmartDashboard.putNumber("supposed setpoint", m_setPoints[setPoint]);
       SmartDashboard.putNumber("supposed output", shooterMotor.get());

@@ -12,11 +12,17 @@ import java.lang.Math;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -27,6 +33,8 @@ public class TeleopSwerve extends Command {
   private DoubleSupplier m_translationSupplier;
   private DoubleSupplier m_strafeSupplier;
   private DoubleSupplier m_rotationSupplier;
+  private DoubleSupplier m_intakeSupplier;
+
   private BooleanSupplier m_robotCentricSupplier;
   private BooleanSupplier m_SnapPressed;
   private BooleanSupplier m_strafeSnapPressed;
@@ -36,6 +44,8 @@ public class TeleopSwerve extends Command {
   private double m_LimelightId;
   private double m_currentId;
 
+  private final XboxController m_DriveController = new XboxController(0);
+
   private int[] arraychosen;
   private double move_to_yaw;
 
@@ -43,6 +53,8 @@ public class TeleopSwerve extends Command {
   private SlewRateLimiter strafeLimiter = new SlewRateLimiter(3.0);
   private SlewRateLimiter rotationLimiter = new SlewRateLimiter(3.0);
   private double rotationVal;
+  private double intakeVal;
+
   private double distance;
   private double translationVal;
   private double current_yaw;
@@ -51,22 +63,41 @@ public class TeleopSwerve extends Command {
   private double strafeVal;
   private boolean blueOrNot;
 
+  ProfiledPIDController controller;
+  PIDController holdController;
+  Constraints constraints;
+
+
   /** Creates a new TeleopSwerve. */
     public TeleopSwerve(SwerveSubsystem SwerveSubsystem,
         Limelight Limelight,     
         DoubleSupplier translationSupplier,
         DoubleSupplier strafeSupplier,
         DoubleSupplier rotationSupplier,
+        DoubleSupplier intakeSupplier,
         BooleanSupplier robotCentricSupplier,
         BooleanSupplier rotationSnapPressed,
         BooleanSupplier strafeSnapPressed,
         BooleanSupplier m_blueOrNot) {
+
+
+      constraints = new Constraints(Constants.SwerveConstants.m_maxAngularVelocity, Constants.SwerveConstants.m_maxAngularAcceleation);
+        controller =
+                new ProfiledPIDController(
+                        0.1,
+                        0,
+                        0,
+                        constraints);
+
+      controller.enableContinuousInput(-Math.PI, Math.PI);
+      controller.setTolerance(Math.PI / 180);
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_SwerveSubsystem = SwerveSubsystem;
     this.m_Limelight = Limelight;
     this.m_SnapPressed = rotationSnapPressed;
     this.m_strafeSnapPressed = strafeSnapPressed;
     this.m_blueOrNot = m_blueOrNot;
+    this.m_intakeSupplier = intakeSupplier;
     addRequirements(m_SwerveSubsystem);
     this.m_translationSupplier = translationSupplier;
     this.m_strafeSupplier = strafeSupplier;
@@ -83,9 +114,21 @@ public class TeleopSwerve extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    intakeVal = m_intakeSupplier.getAsDouble();
+    SmartDashboard.putNumber("intake value", intakeVal);
     int cur_id = m_Limelight.getID();
     distance = m_Limelight.find_Tag_Y_Distance(m_Limelight.findTagHeightFromID(m_Limelight.check_eligible_id(cur_id)));
     double tx = Math.abs(m_Limelight.findXOffset());
+
+    if (SmartDashboard.getBoolean("RUMBLE RUMBLE", false) == true)
+    {
+      m_DriveController.setRumble(RumbleType.kBothRumble, 0.1);
+    } 
+    else 
+    {
+      m_DriveController.setRumble(RumbleType.kBothRumble, 0.0);
+
+    }
     if (distance < 1.5 && distance > 0 && tx < 20)
     {
       m_SwerveSubsystem.LEDon();
@@ -134,81 +177,21 @@ public class TeleopSwerve extends Command {
 
       if (cur_id == 4 || cur_id == 7)
       {
-      rotationVal = rotationLimiter.calculate(
-           MathUtil.applyDeadband((x_offset/-27), 0.15));
-      }
-    
-      /*
-      else if (cur_id == 3 || cur_id == 7)
-      {
-        rotationVal = rotationLimiter.calculate(
-        MathUtil.applyDeadband((x_offset/-27), Constants.SwerveConstants.inputDeadband));
-      } */
-    }
+        rotationVal = calculate(-x_offset / 180 * 3.1415962);
       
-      /* 
-      else {
-        current_yaw = m_SwerveSubsystem.getYawDegrees();
-      //  SmartDashboard.putString("DB/String 6", Double.toString(current_yaw));
-        //SmartDashboard.putString("DB/String 7", Double.toString(final_yaw));
-       /// SmartDashboard.putString("DB/String 8", Double.toString(m_LimelightId));
-
-        m_currentId = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0);
-
-        if (m_currentId > 0 && m_currentId < 17) 
-        {
-          m_LimelightId = m_currentId;
-        }
-
-        if (m_LimelightId > 0 && m_LimelightId < 17)
-        {
-          if (m_blueOrNot.getAsBoolean() == true) 
-          {
-            final_yaw = Constants.SwerveConstants.apTagGyrosBlue[((int)m_LimelightId - 1)];
-          }
-          else {
-            final_yaw = Constants.SwerveConstants.apTagGyrosRed[((int)m_LimelightId - 1)];
-          }
-        }
-        if (current_yaw > 360)
-        {
-          current_yaw -= (Math.ceil(current_yaw / 360)) * 360;
-        }
-        if (current_yaw < 0)
-        {
-          current_yaw += (Math.floor(-current_yaw / 360)) * 360;
-        }
-        move_to_yaw = (final_yaw - current_yaw);
-
-        if (move_to_yaw > 180)
-        {
-          move_to_yaw -= 360;
-        }
-        */
-          //move_to_yaw = m_SwerveSubsystem.closestAngle(current_yaw, final_yaw);
+      }
+  
+    }
         SmartDashboard.putString("DB/String 8", Double.toString(move_to_yaw));
-        /*
-          if (Math.abs(final_yaw - current_yaw) > 90 && Math.abs(final_yaw - current_yaw) < 270) {
-            final_yaw = ((int)final_yaw + 180) % 360;
-           Constants.SwerveConstants.maxSpeed = -Constant.SwerveConstants.maxSpeed;
-        */
+    
 
         move_to_yaw = move_to_yaw / 60;
-            //move_to_yaw = m_SwerveSubsystem.closestAngle(final_yaw, current_yaw);
-
-          //SmartDashboard.putString("DB/String 6", Double.toString(current_yaw));
-
-        
-
           SmartDashboard.putString("DB/String 9", Double.toString(move_to_yaw));
           rotationVal = rotationLimiter.calculate(
             MathUtil.applyDeadband(move_to_yaw, 0));
     
     /* Drive */
-   // SmartDashboard.putString("DB/String 0 ", Double.toString(translationVal));
-
     m_SwerveSubsystem.drive(
-        //the joystick values (-1 to 1) multiplied by the max speed of the drivetrai
 
         new Translation2d(translationVal, strafeVal).times(Constants.SwerveConstants.maxSpeed),
         //rotation value times max spin speed
@@ -218,6 +201,35 @@ public class TeleopSwerve extends Command {
         //open loop control
         true);
     }
+
+  public double calculate(double goalRadians) {
+      double calculatedValue =
+              controller.calculate(m_SwerveSubsystem.rotationRads(), goalRadians);
+      if (atSetpoint()) {
+          return calculateHold(goalRadians);
+      } else {
+          return calculatedValue;
+      }
+  }
+
+  public double calculateHold(double goalRadians) {
+      double calculatedValue =
+              holdController.calculate(m_SwerveSubsystem.rotationRads(), goalRadians);
+      return calculatedValue;
+  }
+
+  public boolean atSetpoint() {
+      return controller.atSetpoint();
+  }
+
+  public boolean atHoldSetpoint() {
+      return holdController.atSetpoint();
+  }
+
+  public void reset() {
+    controller.reset(m_SwerveSubsystem.rotationRads());
+    holdController.reset();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
