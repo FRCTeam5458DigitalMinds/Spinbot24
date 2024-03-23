@@ -49,7 +49,7 @@ public class RetractIntake extends Command {
         SmartDashboard.putNumber("intake V", intake.getPos());
 
 
-        if (intake.getPos() > -2 && timer.get() > 0.2)
+        if (intake.getPos() > -2.5)
         {
             shooter.toSetPoint(0);
             return true;

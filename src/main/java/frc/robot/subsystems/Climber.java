@@ -13,8 +13,8 @@ import frc.robot.Constants;
 import frc.robot.Constants.ClimbConstants;
 
 public class Climber extends SubsystemBase {
-    private double stage1 = (315.5961938 / 42);
-    private double stage2 = (1642.5750 / 42);
+    private double stage1 = (7.51419507 + 6.488);
+    private double stage2 = (39.1089286);
     private double[] m_setPoints = {0, stage1, stage2};
     private int climb_ID1 = ClimbConstants.climb_ID1;
     private int climb_ID2 = ClimbConstants.climb_ID2;
