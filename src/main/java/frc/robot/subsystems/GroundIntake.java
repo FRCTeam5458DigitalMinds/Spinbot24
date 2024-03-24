@@ -1,55 +1,61 @@
 package frc.robot.subsystems;
 
-import com.playingwithfusion.TimeOfFlight;
-import com.playingwithfusion.TimeOfFlight.RangingMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
 public class GroundIntake extends SubsystemBase {
+  //PID setpoints of ideal encoder values
   private double deployPosition = -36;
   private double climbingPosition = -13.104;
   private double origin = -2.37225;
   private double ejectPosition = -27;
-  private double intakedistance;
 
   private double[] m_setPoints = {origin, deployPosition, climbingPosition, ejectPosition};
   
+  //declaring intake motors/encoders
   private final SparkPIDController intakeController;
   private RelativeEncoder intakeEncoder;
   
   private CANSparkMax intakeMotor;
   private CANSparkMax rollerMotor;
-  private final TimeOfFlight m_rangeSensor = new TimeOfFlight(0);
-  private double filteredCurrent;
+
 
 
 
 
   public GroundIntake() {
+
+    //motor definitions
     intakeMotor = new CANSparkMax(Constants.IntakeConstants.intake_ID, MotorType.kBrushless);
     rollerMotor = new CANSparkMax(Constants.IntakeConstants.roller_ID, MotorType.kBrushless);
+
+    //delcaring & resetting intake slap down encoder
     intakeEncoder = intakeMotor.getEncoder();
+    intakeEncoder.setPosition(0);
+
+
+    //configuring the motors
     intakeMotor.restoreFactoryDefaults();
     rollerMotor.restoreFactoryDefaults();
-    intakeMotor.setIdleMode(IdleMode.kCoast);
+    intakeMotor.setIdleMode(IdleMode.kBrake);
     intakeMotor.burnFlash();
-    rollerMotor.setIdleMode(IdleMode.kBrake);
+    rollerMotor.setIdleMode(IdleMode.kCoast);
     rollerMotor.burnFlash();
 
+    //setting motor current limits
     rollerMotor.setSmartCurrentLimit(35);
     intakeMotor.setSmartCurrentLimit(30);
 
+    //intake slap down PID declaration and initial config of values
     intakeController = intakeMotor.getPIDController();
-    intakeEncoder.setPosition(0);
+
     intakeController.setP(Constants.IntakeConstants.kP);
     intakeController.setI(Constants.IntakeConstants.kI);
     intakeController.setD(Constants.IntakeConstants.kD);
@@ -57,62 +63,39 @@ public class GroundIntake extends SubsystemBase {
 
     intakeController.setFeedbackDevice(intakeEncoder);
     intakeController.setSmartMotionMaxAccel(Constants.IntakeConstants.max_accel, 0);
-    intakeMotor.setIdleMode(IdleMode.kBrake);
-    rollerMotor.setIdleMode(IdleMode.kCoast);
-   // intakeController.setSmartMotionMinOutputVelocity(Constants.IntakeConstants.min_vel, 0);
     intakeController.setSmartMotionMaxVelocity(Constants.IntakeConstants.max_vel, 0);
     intakeController.setSmartMotionAllowedClosedLoopError(Constants.IntakeConstants.allowed_error, 0);
-    //intakeController.set
-    m_rangeSensor.setRangingMode(RangingMode.Short, 40);
+
   }
 
+  //moves intake slapdown to a certain encoder value from preset array
+  //setPoint passed in as index
   public void toSetPoint(int setPoint) 
   {
     SmartDashboard.putNumber("Intake setpoint", setPoint);
     intakeController.setReference(m_setPoints[setPoint], CANSparkMax.ControlType.kSmartMotion);
-    //intakeController.set
   }
 
+  //sets the speed of the intake rollers
   public void setRollers(double OutputPercent)
   {
-        SmartDashboard.putNumber("Intake roller", OutputPercent);
-
       OutputPercent /= 100.;
       rollerMotor.set(-OutputPercent);
   }
 
+  //returns the output current of the intake roller motor
   public double voltageOutput()
   {
-    SmartDashboard.putNumber("applied output", rollerMotor.getAppliedOutput());
-    SmartDashboard.putNumber("bus voltage", rollerMotor.getBusVoltage());
-    SmartDashboard.putNumber("output current", rollerMotor.getOutputCurrent());
+    SmartDashboard.putNumber("roller output current", rollerMotor.getOutputCurrent());
     
-    //return intakeMotor.getAppliedOutput();
     return rollerMotor.getOutputCurrent();
-
   }
 
-  public double getCurrent() {
-    return intakeMotor.getOutputCurrent();
-  }
-
-  public double getFilteredCurrent() {
-    return filteredCurrent;
-  }
-
-
+  //returns the intake slap down motor encoder position
   public double getPos()
   {
     return intakeEncoder.getPosition();
   }
-  /* public void check vFinished()
-  {
-    if (atSetPoint)
-    {
-      armController.
-    }
-  } */
-
 
   @Override
   public void periodic() {
@@ -123,54 +106,5 @@ public class GroundIntake extends SubsystemBase {
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
   }
-
-  public double getEncoder()
-  {
-    return intakeEncoder.getPosition();
-  }
- 
-  public void print(String message)
-  {
-    SmartDashboard.putString("DB/String 2", message);
-  }
-
-  public double intakedistance()
-  {
-    
-    intakedistance = (int)m_rangeSensor.getRange();
-
-    SmartDashboard.putNumber("space, time (of flight)", intakedistance);
-    return intakedistance;
-  }
-
-   
-  /*
-  public CommandBase intakenoteCommand() {
-    Debouncer debounce = new Debouncer(1, Debouncer.DebounceType.kRising);
-    // Open arms
-    return runOnce(
-            () -> {
-              debounce.calculate(false);
-              this.open();
-            })
-        // set the intake to cube intaking speed
-        .andThen(
-            run(() -> {
-                  setRollers(6);
-                })
-                // Wait until current spike is detected for more than 1s
-                .until(() -> debounce.calculate(getFilteredCurrent() > 15)))
-        // Reduce motor power to holding power
-        .finallyDo(
-            (interrupted) -> {
-              System.out.println("ended");
-              setRollers(6);
-            });
-  }
-  */
-  /* protected void interrupted()
-  {
-   
-  } */
 
 }

@@ -29,7 +29,6 @@ import frc.robot.Constants;
 
 public class SwerveSubsystem extends SubsystemBase {
   private final Pigeon2 pigeon;
-  private final Limelight m_Limelight;
 
   private PowerDistribution sparkPDH = new PowerDistribution(1, ModuleType.kRev);
   private SwerveDriveOdometry swerveOdometry;
@@ -44,7 +43,6 @@ public class SwerveSubsystem extends SubsystemBase {
 
     //instantiates new pigeon gyro, wipes it, and zeros it
     pigeon = new Pigeon2(Constants.SwerveConstants.PIGEON_ID);
-    m_Limelight = new Limelight();
     pigeon.getConfigurator().apply(new Pigeon2Configuration());
     zeroGyro();
 

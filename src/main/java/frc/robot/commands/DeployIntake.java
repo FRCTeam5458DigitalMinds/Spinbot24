@@ -1,16 +1,10 @@
 package frc.robot.commands;
 
-import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
-
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.GroundIntake;
 import frc.robot.subsystems.Shooter;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 
 
@@ -21,7 +15,7 @@ public class DeployIntake extends Command {
     Shooter shooter;
     Climber elevator;
     Double intake_val;
-
+    boolean finished;
 
 
     public DeployIntake(GroundIntake Intake, Shooter m_Shooter, Climber m_Climber) 
@@ -37,48 +31,55 @@ public class DeployIntake extends Command {
 
     public void initialize() 
     {
+        finished = false;
         intake.toSetPoint(1);
-
-        SmartDashboard.putString("INTAKE STATE", "INITIALIZING BEEP BEEP");
         intake.setRollers(80);
         
         shooter.runFeederWheels(0);
         shooter.runFlyWheels(0);
-        shooter.toSetPoint(1);
         
-        
+        SmartDashboard.putString("deploy state", "init");
+
+        SmartDashboard.putNumber("voltage output", intake.voltageOutput());
+        SmartDashboard.putBoolean("deploy done", false);
 
     }
 
-    public void execute() {
+    public void execute() 
+    {
        // SmartDashboard.putString("INTAKE STATE", "EXECUTING BEEP BEEP");
-        if (intake.voltageOutput() >= 35)
-        {
-            SmartDashboard.putBoolean("RUMBLE RUMBLE", true);
-            intake.setRollers(0);
-            intake.toSetPoint(0);
-            shooter.runFeederWheels(0);
-            shooter.runFlyWheels(0);
 
-            isFinished();
-        }
-        else
+        if (intake.voltageOutput() >= 37)
         {
             shooter.toSetPoint(1);
+
+            if (intake.getPos() < -10) 
+            {
+
+                SmartDashboard.putBoolean("deploy done", true);
+                intake.setRollers(0);
+                intake.toSetPoint(0);
+                shooter.runFeederWheels(0);
+                shooter.runFlyWheels(0);
+
+            }
+            if (SmartDashboard.getBoolean("deploy done", false) == true)
+            {
+                isFinished();
+            }
         }
+
+
+
     }
 
-    @Override
     public boolean isFinished()
     {
-        SmartDashboard.putBoolean("RUMBLE RUMBLE", false);
-
-        if (intake.getPos() > -2.5)
+        if (SmartDashboard.getBoolean("deploy done", false) == true && intake.getPos() > -6)
         {
-            //shooter.toSetPoint(0);
+            shooter.toSetPoint(0);
             return true;
         }
-
         return false;
     }
 }

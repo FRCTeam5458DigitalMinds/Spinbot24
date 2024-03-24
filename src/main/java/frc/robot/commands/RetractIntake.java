@@ -1,7 +1,5 @@
 package frc.robot.commands;
 
-import java.util.function.BooleanSupplier;
-
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.GroundIntake;
 import frc.robot.subsystems.Shooter;
@@ -49,7 +47,7 @@ public class RetractIntake extends Command {
         SmartDashboard.putNumber("intake V", intake.getPos());
 
 
-        if (intake.getPos() > -2.5)
+        if (intake.getPos() > -8)
         {
             shooter.toSetPoint(0);
             return true;

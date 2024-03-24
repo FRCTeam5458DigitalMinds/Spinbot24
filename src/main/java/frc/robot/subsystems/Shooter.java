@@ -1,23 +1,15 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
-import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.Slot1Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.configs.VoltageConfigs;
-import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
-
-import edu.wpi.first.wpilibj.PowerDistribution;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter extends SubsystemBase{
     private TalonFX shooterMotor = new TalonFX(Constants.ShooterConstants.Shooter_ID);
@@ -31,7 +23,6 @@ public class Shooter extends SubsystemBase{
     private double intakeHandoff = 18;
     private double climbingPosition = 47.274;
     private double ampPosition = 50;
-    private double m_ff;
 
     private double[] m_setPoints = {0, intakeHandoff, climbingPosition, ampPosition};
 
@@ -83,7 +74,6 @@ public class Shooter extends SubsystemBase{
       slot0Configs.kD = 0.1;
       slot0Configs.kS = 0.3;
       slot0Configs.kV = 0.1;
-      m_ff = 1;
 
       slot1Configs.kP = 4.8;
       slot1Configs.kI = 0;
@@ -91,7 +81,6 @@ public class Shooter extends SubsystemBase{
       slot1Configs.kS = 0.25;
       slot1Configs.kV = 0.12;
 
-      FeedbackConfigs fdb = cfg.Feedback;
       shooterMotor.getConfigurator().apply(cfg);
       flyWheelOne.getConfigurator().apply(cfg);
       flyWheelTwo.getConfigurator().apply(cfg);
@@ -115,8 +104,6 @@ public class Shooter extends SubsystemBase{
     {
       SmartDashboard.putNumber("shooter setpoint", setPoint);
 
-      var motorPosSignal = shooterMotor.getRotorPosition();
-      var motorPos = motorPosSignal.getValue();
 
    //   shooterMotor.get
       //inal MotionMagicExpoVoltage m_PIDRequest = new MotionMagicExpoVoltage(0).withSlot(0);

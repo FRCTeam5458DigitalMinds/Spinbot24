@@ -1,15 +1,9 @@
 package frc.robot.commands;
 
-
-import java.util.function.BooleanSupplier;
 import frc.robot.subsystems.GroundIntake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Climber;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Climber;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 
 public class EndHandoff extends Command{
 

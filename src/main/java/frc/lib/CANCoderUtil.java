@@ -2,7 +2,6 @@ package frc.lib;
 
 
 import com.ctre.phoenix6.hardware.CANcoder;
-import com.ctre.phoenix6.BaseStatusSignal;
 
 /** Sets status frames for the CTRE CANCoder. */
 public class CANCoderUtil {

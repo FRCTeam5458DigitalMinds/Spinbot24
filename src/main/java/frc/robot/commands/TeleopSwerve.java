@@ -6,10 +6,8 @@ package frc.robot.commands;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
-import frc.robot.RobotContainer;
 import java.lang.Math;
 
-import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -22,7 +20,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -38,15 +35,11 @@ public class TeleopSwerve extends Command {
   private BooleanSupplier m_robotCentricSupplier;
   private BooleanSupplier m_SnapPressed;
   private BooleanSupplier m_strafeSnapPressed;
-  private BooleanSupplier m_blueOrNot;
   private Limelight m_Limelight;
   private double m_tagHeightInches = 57.4166666;
-  private double m_LimelightId;
-  private double m_currentId;
 
   private final XboxController m_DriveController = new XboxController(0);
 
-  private int[] arraychosen;
   private double move_to_yaw;
 
   private SlewRateLimiter translationLimiter = new SlewRateLimiter(3.0); //can only change by 3 m/s in the span of 1 s
@@ -56,12 +49,8 @@ public class TeleopSwerve extends Command {
   private double intakeVal;
 
   private double distance;
-  private double translationVal;
-  private double current_yaw;
-  private double final_yaw;
   
   private double strafeVal;
-  private boolean blueOrNot;
 
   ProfiledPIDController controller;
   PIDController holdController;
@@ -84,19 +73,23 @@ public class TeleopSwerve extends Command {
       constraints = new Constraints(Constants.SwerveConstants.m_maxAngularVelocity, Constants.SwerveConstants.m_maxAngularAcceleation);
         controller =
                 new ProfiledPIDController(
-                        0.1,
+                        2,
                         0,
-                        0,
+                        0.5,
                         constraints);
+        holdController = 
+          new PIDController(10, 3, 0);
 
       controller.enableContinuousInput(-Math.PI, Math.PI);
       controller.setTolerance(Math.PI / 180);
+
+      holdController.enableContinuousInput(-Math.PI, Math.PI);
+      holdController.setTolerance(Math.PI / 180);
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_SwerveSubsystem = SwerveSubsystem;
     this.m_Limelight = Limelight;
     this.m_SnapPressed = rotationSnapPressed;
     this.m_strafeSnapPressed = strafeSnapPressed;
-    this.m_blueOrNot = m_blueOrNot;
     this.m_intakeSupplier = intakeSupplier;
     addRequirements(m_SwerveSubsystem);
     this.m_translationSupplier = translationSupplier;
@@ -168,9 +161,6 @@ public class TeleopSwerve extends Command {
 
       SmartDashboard.putString("DB/String 9", Double.toString(move_to_yaw));
     }
-    
-  // rotation snapping, restore soon and configure to a seperate button
-
     else 
     {
       double x_offset = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
@@ -182,15 +172,6 @@ public class TeleopSwerve extends Command {
       }
   
     }
-        SmartDashboard.putString("DB/String 8", Double.toString(move_to_yaw));
-    
-
-        move_to_yaw = move_to_yaw / 60;
-          SmartDashboard.putString("DB/String 9", Double.toString(move_to_yaw));
-          rotationVal = rotationLimiter.calculate(
-            MathUtil.applyDeadband(move_to_yaw, 0));
-    
-    /* Drive */
     m_SwerveSubsystem.drive(
 
         new Translation2d(translationVal, strafeVal).times(Constants.SwerveConstants.maxSpeed),
@@ -203,11 +184,19 @@ public class TeleopSwerve extends Command {
     }
 
   public double calculate(double goalRadians) {
+    SmartDashboard.putNumber("swerve rotation in rads", m_SwerveSubsystem.rotationRads());
+    SmartDashboard.putNumber("goal in rads", goalRadians);
+
       double calculatedValue =
               controller.calculate(m_SwerveSubsystem.rotationRads(), goalRadians);
+      SmartDashboard.putNumber("caculated value", calculatedValue);
+
       if (atSetpoint()) {
+          SmartDashboard.putBoolean("rot at setpoint", true);
+
           return calculateHold(goalRadians);
       } else {
+          SmartDashboard.putBoolean("rot at setpoint", false);
           return calculatedValue;
       }
   }

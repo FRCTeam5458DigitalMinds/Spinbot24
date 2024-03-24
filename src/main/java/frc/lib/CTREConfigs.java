@@ -1,15 +1,8 @@
 package frc.lib;
 
-import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.configs.*;
 import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
-import com.ctre.phoenix6.hardware.CANcoder;
-//import com.ctre.phoenix.sensors.AbsoluteSensorRange;
-//import com.ctre.phoenix.sensors.CANCoderConfiguration;
-//import com.ctre.phoenix.sensors.SensorInitializationStrategy;
-//import com.ctre.phoenix.sensors.SensorTimeBase;
-import frc.robot.Constants;
 
 public final class CTREConfigs {
   public CANcoderConfiguration swerveCanCoderConfig;

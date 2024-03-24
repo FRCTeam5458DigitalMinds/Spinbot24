@@ -1,37 +1,32 @@
 package frc.robot.commands;
-
-import java.util.function.BooleanSupplier;
-
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.GroundIntake;
 import frc.robot.subsystems.Shooter;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import com.playingwithfusion.TimeOfFlight;
-import com.playingwithfusion.TimeOfFlight.RangingMode;
 
-//ACCOUNT FOR TIME OF FLIGHT WHEN WE GET/FINISH IMPORTANT STUFF
+//use for auto as deploy intake relies on conditions that cannot be 100% in auto
 public class AutoDeployIntake extends Command {
+    //declaring local subsystem variables
     GroundIntake intake;
     Shooter shooter;
     Climber elevator;
-    private final TimeOfFlight m_rangeSensor = new TimeOfFlight(0);
-
 
     public AutoDeployIntake(GroundIntake Intake, Shooter m_Shooter, Climber m_Climber) 
     {
+        //assign the local subsystem variables the global ones, NECESSARY
         this.intake = Intake;
         this.shooter = m_Shooter;
         this.elevator = m_Climber;
 
+        //must add requirements for every subsystem or code breaks with no error lol
         addRequirements(Intake);
         addRequirements(m_Shooter);
         addRequirements(m_Climber);
     }
 
     public void initialize() {
-        //ADD OR STATEMENT FOR FLIGHT SENSOR
-       // elevator.toSetPoint(0);
+
+        //deploys the intake and runs/stops the complementary motors
         shooter.runFeederWheels(0);
         shooter.runFlyWheels(0);
         shooter.toSetPoint(1);
@@ -39,25 +34,13 @@ public class AutoDeployIntake extends Command {
         intake.setRollers(80);
         intake.toSetPoint(1);
 
-        //m_rangeSensor.setRangingMode(RangingMode.Short, 40);    
-        SmartDashboard.putNumber("Intake Rollers", 80);
-        SmartDashboard.putNumber("Intake Setpoint", 1);
-
-        SmartDashboard.putNumber("hehehe", 1);
-    }
-
-    public void execute() {
-        SmartDashboard.putNumber("Intake Distance", intake.intakedistance());
-        if (intake.intakedistance() / 10 < 5)
-        {
-            SmartDashboard.putNumber("hehehe", 0);
-
-           new RetractIntake(intake, shooter, elevator);
-           isFinished();
-        }
+        
+        isFinished();
     }
 
     @Override
+
+    //nomenclature essential to actually ending the command
     public boolean isFinished()
     {
         return true;
