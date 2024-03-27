@@ -72,19 +72,21 @@ public class TeleopSwerve extends Command {
 
       constraints = new Constraints(Constants.SwerveConstants.m_maxAngularVelocity, Constants.SwerveConstants.m_maxAngularAcceleation);
         controller =
+        //1.5, 0, 0.5
                 new ProfiledPIDController(
-                        2,
                         0,
-                        0.5,
+                        0,
+                        0,
                         constraints);
+        // 10, 3, 0
         holdController = 
-          new PIDController(10, 3, 0);
+          new PIDController(0, 0, 0);
 
       controller.enableContinuousInput(-Math.PI, Math.PI);
       controller.setTolerance(Math.PI / 180);
 
       holdController.enableContinuousInput(-Math.PI, Math.PI);
-      holdController.setTolerance(Math.PI / 180);
+      holdController.setTolerance(Math.PI / 60);
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_SwerveSubsystem = SwerveSubsystem;
     this.m_Limelight = Limelight;
@@ -167,8 +169,8 @@ public class TeleopSwerve extends Command {
 
       if (cur_id == 4 || cur_id == 7)
       {
+        SmartDashboard.putNumber("x offset", x_offset);
         rotationVal = calculate(-x_offset / 180 * 3.1415962);
-      
       }
   
     }

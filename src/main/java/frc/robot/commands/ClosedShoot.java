@@ -52,7 +52,7 @@ public class ClosedShoot extends Command
 
                 if (distance >= 0) 
                 {
-                    offset = SmartDashboard.getNumber("offset", 0.46);
+                    offset = SmartDashboard.getNumber("offset", 0.31);
                     degrees = (distance - offset)*(1.5/.05);
 
                     if (distance > 1)

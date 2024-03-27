@@ -20,14 +20,14 @@ public class ChangeOffset extends Command{
         if (setpoint != 2)
         {
             //reading the current offset from our smart dash and replacing with the addition/subtraction
-            offset = SmartDashboard.getNumber("offset", 0.46);
+            offset = SmartDashboard.getNumber("offset", 0.31);
             SmartDashboard.putNumber("offset", offset + 0.01 * setpoint);
 
         } 
         else 
         {
             //resetting the offset
-            SmartDashboard.putNumber("offset", 0.46);
+            SmartDashboard.putNumber("offset", 0.31);
         }
 
         //ending command
