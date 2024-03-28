@@ -40,8 +40,6 @@ public class TeleopSwerve extends Command {
 
   private final XboxController m_DriveController = new XboxController(0);
 
-  private double move_to_yaw;
-
   private SlewRateLimiter translationLimiter = new SlewRateLimiter(3.0); //can only change by 3 m/s in the span of 1 s
   private SlewRateLimiter strafeLimiter = new SlewRateLimiter(3.0);
   private SlewRateLimiter rotationLimiter = new SlewRateLimiter(3.0);
@@ -74,7 +72,7 @@ public class TeleopSwerve extends Command {
         controller =
         //1.5, 0, 0.5
                 new ProfiledPIDController(
-                        0,
+                        0.9,
                         0,
                         0,
                         constraints);
@@ -83,10 +81,10 @@ public class TeleopSwerve extends Command {
           new PIDController(0, 0, 0);
 
       controller.enableContinuousInput(-Math.PI, Math.PI);
-      controller.setTolerance(Math.PI / 180);
+      controller.setTolerance(0.05*Math.PI / 180);
 
       holdController.enableContinuousInput(-Math.PI, Math.PI);
-      holdController.setTolerance(Math.PI / 60);
+      holdController.setTolerance(0.05 *Math.PI / 180);
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_SwerveSubsystem = SwerveSubsystem;
     this.m_Limelight = Limelight;
@@ -124,7 +122,7 @@ public class TeleopSwerve extends Command {
       m_DriveController.setRumble(RumbleType.kBothRumble, 0.0);
 
     }
-    if (distance < 1.5 && distance > 0 && tx < 20)
+    if (distance < 1.25 && distance > .95 && tx < 17)
     {
       m_SwerveSubsystem.LEDon();
     }
@@ -161,7 +159,9 @@ public class TeleopSwerve extends Command {
       rotationLimiter.calculate(
           MathUtil.applyDeadband(m_rotationSupplier.getAsDouble(), 0.1));
 
-      SmartDashboard.putString("DB/String 9", Double.toString(move_to_yaw));
+      SmartDashboard.putNumber("swerve rotation in rads", m_SwerveSubsystem.rotationRads());
+
+
     }
     else 
     {
@@ -170,12 +170,24 @@ public class TeleopSwerve extends Command {
       if (cur_id == 4 || cur_id == 7)
       {
         SmartDashboard.putNumber("x offset", x_offset);
-        rotationVal = calculate(-x_offset / 180 * 3.1415962);
+        //rotationVal =  rotationLimiter.calculate(
+         // MathUtil.applyDeadband((-x_offset / 27), 0.1));
+         if (Math.abs(x_offset) > 1.5)
+         {
+            rotationVal = calculate(-(x_offset) / 180 * Math.PI);
+         }
+         else
+         {
+          rotationVal = 0;
+         }
       }
-  
+      else 
+       {
+         rotationVal = 0;
+      }
+      SmartDashboard.putNumber("roation vaule", rotationVal);
     }
     m_SwerveSubsystem.drive(
-
         new Translation2d(translationVal, strafeVal).times(Constants.SwerveConstants.maxSpeed),
         //rotation value times max spin speed
         rotationVal * Constants.SwerveConstants.maxAngularVelocity,

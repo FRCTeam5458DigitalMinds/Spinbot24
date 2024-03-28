@@ -37,6 +37,7 @@ public class DeployIntake extends Command {
         
         shooter.runFeederWheels(0);
         shooter.runFlyWheels(0);
+        shooter.toSetPoint(1);
         
         SmartDashboard.putString("deploy state", "init");
 
@@ -63,14 +64,11 @@ public class DeployIntake extends Command {
                 shooter.runFlyWheels(0);
 
             }
-            if (SmartDashboard.getBoolean("deploy done", false) == true)
+            if(SmartDashboard.getBoolean("deploy done", false) == true)
             {
                 isFinished();
             }
         }
-
-
-
     }
 
     public boolean isFinished()

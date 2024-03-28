@@ -29,7 +29,6 @@ public class ChangeOffset extends Command{
             //resetting the offset
             SmartDashboard.putNumber("offset", 0.31);
         }
-
         //ending command
         isFinished();
     }
