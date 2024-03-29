@@ -72,13 +72,13 @@ public class TeleopSwerve extends Command {
         controller =
         //1.5, 0, 0.5
                 new ProfiledPIDController(
-                        0.9,
+                        1.1,
                         0,
-                        0,
-                        constraints);
+                        .05,
+                      constraints);
         // 10, 3, 0
         holdController = 
-          new PIDController(0, 0, 0);
+          new PIDController(0.7, 0, 0.05);
 
       controller.enableContinuousInput(-Math.PI, Math.PI);
       controller.setTolerance(0.05*Math.PI / 180);
@@ -111,7 +111,7 @@ public class TeleopSwerve extends Command {
     SmartDashboard.putNumber("intake value", intakeVal);
     int cur_id = m_Limelight.getID();
     distance = m_Limelight.find_Tag_Y_Distance(m_Limelight.findTagHeightFromID(m_Limelight.check_eligible_id(cur_id)));
-    double tx = Math.abs(m_Limelight.findXOffset());
+    double tx = (m_Limelight.findXOffset());
 
     if (SmartDashboard.getBoolean("RUMBLE RUMBLE", false) == true)
     {
@@ -122,7 +122,7 @@ public class TeleopSwerve extends Command {
       m_DriveController.setRumble(RumbleType.kBothRumble, 0.0);
 
     }
-    if (distance < 1.25 && distance > .95 && tx < 17)
+    if (distance < 1.25 && distance > .7 && Math.abs(tx) < 23)
     {
       m_SwerveSubsystem.LEDon();
     }

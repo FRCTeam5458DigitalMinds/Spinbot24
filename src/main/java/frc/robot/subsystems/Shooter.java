@@ -57,7 +57,6 @@ public class Shooter extends SubsystemBase{
       mm2.MotionMagicJerk = 0;
       
 
-      shooterMotor.setPosition(0);
       flyWheelOne.setInverted(true);
      // flyWheelTwo.setControl(new Follower(13, false));
     
@@ -103,6 +102,7 @@ public class Shooter extends SubsystemBase{
     public void toSetPoint(int setPoint) 
     {
       SmartDashboard.putNumber("shooter setpoint", setPoint);
+      encoderPrint();
 
 
    //   shooterMotor.get
@@ -141,6 +141,7 @@ public class Shooter extends SubsystemBase{
     }*/
     public void toCustomSetpoint(double degrees)
     {
+      encoderPrint();
       SmartDashboard.putNumber("shooter degree setpoint", degrees);
 
       double toTicks = degreesToRotations(degrees);
@@ -149,7 +150,15 @@ public class Shooter extends SubsystemBase{
      // final MotionMagicExpoVoltage m_PIDRequest = new MotionMagicExpoVoltage(0);
       shooterMotor.setControl(M_MMREQ.withPosition(toTicks).withSlot(1));
     }
+    public void encoderPrint()
+    {
+      SmartDashboard.putNumber("shhoter encoder", shooterMotor.getPosition().getValueAsDouble());
+    }
+    public void setZero()
+    {
+      shooterMotor.setPosition(0);
 
+    }
     public double degreesToRotations(double degrees)
     {
       return (degrees / 360. * 218.75);
@@ -161,6 +170,8 @@ public class Shooter extends SubsystemBase{
     }
     public void runFlyWheels(double OutputPercent)
     {
+      encoderPrint();
+
       double difference = 0.05;
       SmartDashboard.putNumber("fly wheels", OutputPercent);
 

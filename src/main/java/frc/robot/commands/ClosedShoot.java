@@ -52,35 +52,72 @@ public class ClosedShoot extends Command
 
                 if (distance >= 0) 
                 {
-                    offset = SmartDashboard.getNumber("offset", 0.31);
-                    degrees = (distance - offset)*(1.5/.05);
-
-                    if (distance > 1)
+                    if (distance > 0.7 && distance < 1.3)
                     {
-                        if (distance < 1.1 && distance > 1.0)
+                        if (distance > 0.7)
                         {
-                            degrees += 2.5;        
-                        }      
-                        if (distance > 1.2)
-                        {
-                            degrees -= 0.5;        
+                            degrees = 12;
                         } 
-                        if (distance > 1.28)
+                        if (distance > 0.8)
                         {
-                            degrees -= 0.5;        
-                        } 
-                        if (distance > 1.3)
+                            degrees = 15;
+                        }
+                        if (distance > 0.91)
                         {
-                            degrees -= 0.5;        
-                        } 
-                        if (distance > 1.33)
+                            degrees = 17;
+                        }
+                        if (distance > 0.98)
                         {
-                            degrees -= .4;        
-                        }          
+                            degrees = 19;
+                        }
+                        if (distance > 1.05)
+                        {
+                            degrees = 21;
+                        }
+                        if (distance > 1.12)
+                        {
+                            degrees = 23;
+                        }
+                        if (distance > 1.24)
+                        {
+                            degrees = 25;
+                        }
                     }
-                    else
+                    else 
                     {
-                        degrees += 1;
+                    
+                        offset = SmartDashboard.getNumber("offset", 0.31);
+                        degrees = (distance - offset)*(1.5/.05);
+
+             
+                        if (distance > 1)
+                        {
+                        
+                            if (distance < 1.1 && distance > 1.0)
+                            {
+                                degrees += 2.5;        
+                            }      
+                            if (distance > 1.2)
+                            {
+                                degrees -= 0.5;        
+                            } 
+                            if (distance > 1.28)
+                            {
+                                degrees -= 0.5;        
+                            } 
+                            if (distance > 1.3)
+                            {
+                                degrees -= 0.5;        
+                            } 
+                            if (distance > 1.33)
+                            {
+                                degrees -= .4;        
+                            }          
+                        }
+                        else
+                        {
+                            degrees += 1;
+                        } 
                     }
                     if (degrees < 50 && degrees >= 0)
                     {
@@ -108,7 +145,9 @@ public class ClosedShoot extends Command
         }
 
         public void execute()
-        {
+        {      
+            shooter.encoderPrint();
+
             isFinished();
         }
 

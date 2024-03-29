@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.TeleopSwerve;
+import frc.robot.commands.ZeroShooter;
 import frc.robot.commands.DeployIntake;
 import frc.robot.commands.Eject;
 import frc.robot.commands.EndHandoff;
@@ -141,7 +142,7 @@ public class RobotContainer {
     m_DriveController.button(Button.kStart.value).onTrue(new ChangeOffset(1));
     m_DriveController.button(Button.kRightStick.value).onTrue(new ChangeOffset(2));
 
-
+    m_DriveController.button(Button.kLeftStick.value).onTrue(new ZeroShooter(m_Shooter));
     m_DriveController.button(Button.kY.value).onTrue(new InstantCommand(() -> m_SwerveSubsystem.zeroGyro()));
     
     m_DriveController.povDown().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 0));
