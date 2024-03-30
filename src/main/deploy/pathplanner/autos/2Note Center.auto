@@ -2,31 +2,43 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.57708433329085,
-      "y": 6.875164023158289
+      "x": 0.7913245719729881,
+      "y": 4.6061651316659695
     },
-    "rotation": -90.0
+    "rotation": -59.30027744918559
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "AmpA"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "RaiseElevator"
+            "name": "SubShoot"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.2
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootFinish"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3Note CenterA"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3Note CenterB"
           }
         },
         {
@@ -38,31 +50,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.3
           }
         },
         {
           "type": "named",
           "data": {
             "name": "ShootFinish"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "LowerElevator"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "AmpAToMid"
           }
         }
       ]

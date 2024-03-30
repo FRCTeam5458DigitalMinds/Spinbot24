@@ -122,7 +122,7 @@ public class TeleopSwerve extends Command {
       m_DriveController.setRumble(RumbleType.kBothRumble, 0.0);
 
     }
-    if (distance < 1.25 && distance > .7 && Math.abs(tx) < 23)
+    if (distance < 1.25 && distance > .7)
     {
       m_SwerveSubsystem.LEDon();
     }
@@ -174,7 +174,7 @@ public class TeleopSwerve extends Command {
          // MathUtil.applyDeadband((-x_offset / 27), 0.1));
          if (Math.abs(x_offset) > 1.5)
          {
-            rotationVal = calculate(-(x_offset) / 180 * Math.PI);
+            rotationVal = calculate(m_SwerveSubsystem.rotationRads() + (-(x_offset) / 180 * Math.PI));
          }
          else
          {

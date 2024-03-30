@@ -52,7 +52,7 @@ public class ClosedShoot extends Command
 
                 if (distance >= 0) 
                 {
-                    if (distance > 0.7 && distance < 1.3)
+                    if (distance > 0.7 && distance < 1.5)
                     {
                         if (distance > 0.7)
                         {
@@ -74,13 +74,29 @@ public class ClosedShoot extends Command
                         {
                             degrees = 21;
                         }
-                        if (distance > 1.12)
+                        if (distance > 1.15)
                         {
                             degrees = 23;
+                        }
+                        if (distance > 1.20)
+                        {
+                            degrees = 24;
                         }
                         if (distance > 1.24)
                         {
                             degrees = 25;
+                        }
+                        if (distance > 1.28)
+                        {
+                            degrees = 24;
+                        }
+                        if (distance > 1.33)
+                        {
+                            degrees = 26;
+                        }
+                        if (distance > 1.41)
+                        {
+                            degrees = 27;
                         }
                     }
                     else 
@@ -127,7 +143,7 @@ public class ClosedShoot extends Command
                         shooter.runFlyWheels(-95);
                         shooter.runFeederWheels(0);
                     }
-                }
+                } 
             } 
             else if (climber.getStage() == 1)
             {
@@ -158,13 +174,20 @@ public class ClosedShoot extends Command
             {
                 if (timer.get() > 0.1) 
                 {
-                    if (shooter.getV() == 0 && distance > -1)
+                    if (shooter.getV() == 0)
                     {
-                        shooter.runFeederWheels(85);
-                        intake.setRollers(-50);
+                        if (distance > -1)
+                        {
+                            shooter.runFeederWheels(85);
+                            intake.setRollers(-50);
+                            
+                            return true;
+                        } 
+                        else
+                        {
                         
-                        return true;
-                    }
+                        }
+                    } 
                 }
             }
             else 

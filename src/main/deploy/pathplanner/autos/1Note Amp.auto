@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.48918041856440025,
-      "y": 6.935079926139497
+      "x": 0.57708433329085,
+      "y": 6.875164023158289
     },
     "rotation": -90.0
   },
@@ -26,7 +26,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 1.0
           }
         },
         {
@@ -38,13 +38,31 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.5
           }
         },
         {
           "type": "named",
           "data": {
             "name": "ShootFinish"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "LowerElevator"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AmpB"
           }
         }
       ]
