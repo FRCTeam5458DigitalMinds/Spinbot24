@@ -111,7 +111,6 @@ public class TeleopSwerve extends Command {
     SmartDashboard.putNumber("intake value", intakeVal);
     int cur_id = m_Limelight.getID();
     distance = m_Limelight.find_Tag_Y_Distance(m_Limelight.findTagHeightFromID(m_Limelight.check_eligible_id(cur_id)));
-    double tx = (m_Limelight.findXOffset());
 
     if (SmartDashboard.getBoolean("RUMBLE RUMBLE", false) == true)
     {

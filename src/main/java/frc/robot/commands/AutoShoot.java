@@ -98,7 +98,7 @@ public class AutoShoot extends Command
                         {
                             degrees = 27;
                         }
-                        degrees -= 1;
+                        degrees -= 2;
                     }
                     else 
                     {
