@@ -91,11 +91,10 @@ public class RobotContainer {
 
     //named commands for autos, make sure the name aligns with pathplanner named command
     NamedCommands.registerCommand("FarShoot", new ClosedShoot(m_Shooter, m_GroundIntake, m_Climber, m_Limelight));
+    NamedCommands.registerCommand("FarShootB", new AutoShoot(m_Shooter, m_GroundIntake, m_Climber, m_Limelight));
+
     NamedCommands.registerCommand("SubShoot", new OpenShoot(m_Shooter, m_GroundIntake));
   
-    NamedCommands.registerCommand("L_FarShoot", new AutoShoot(m_Shooter, m_GroundIntake, 0));
-    NamedCommands.registerCommand("R_FarShoot", new AutoShoot(m_Shooter, m_GroundIntake, 2));
-    NamedCommands.registerCommand("M_FarShoot", new AutoShoot(m_Shooter, m_GroundIntake, 1));
 
     NamedCommands.registerCommand("ShootFinish", new FinishShoot(m_Shooter, m_GroundIntake, m_Climber));
     NamedCommands.registerCommand("StopIntake", new RetractIntake(m_GroundIntake, m_Shooter, m_Climber));
