@@ -19,6 +19,7 @@ public class ClosedShoot extends Command
     double offset = SmartDashboard.getNumber("offset", 0.40);
     double distance;
     double degrees;
+    double new_offset = SmartDashboard.getNumber("new offset", 0.0);
 
     Climber climber;
     double elevator_point;
@@ -54,6 +55,7 @@ public class ClosedShoot extends Command
                 {
                     if (distance > 0.7 && distance < 1.5)
                     {
+                        new_offset = SmartDashboard.getNumber("new offset", 0.0);
                         if (distance > 0.7)
                         {
                             degrees = 12;
@@ -98,6 +100,9 @@ public class ClosedShoot extends Command
                         {
                             degrees = 27;
                         }
+
+                        degrees += 1.5;
+                        degrees += new_offset;
                     }
                     else 
                     {

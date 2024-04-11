@@ -26,9 +26,9 @@ public class RetractIntake extends Command {
 
     public void initialize() {
         //ADD OR STATEMENT FOR FLIGHT SENSOR
-        intake.setRollers(0);
         intake.toSetPoint(0);
-      //  elevator.toSetPoint(0);
+        intake.setRollers(65);
+      //  elevator.toSetPoint(0)
         shooter.runFeederWheels(0);
         shooter.runFlyWheels(0);
 
@@ -49,6 +49,8 @@ public class RetractIntake extends Command {
         if (intake.getPos() > -8)
         {
             shooter.toSetPoint(0);
+            intake.setRollers(0);
+
             return true;
         }
 

@@ -14,7 +14,7 @@ public class GroundIntake extends SubsystemBase {
   //PID setpoints of ideal encoder values
   private double deployPosition = -36;
   private double climbingPosition = -13.104;
-  private double origin = -2.37225;
+  private double origin = 0;
   private double ejectPosition = -27;
 
   private double[] m_setPoints = {origin, deployPosition, climbingPosition, ejectPosition};
@@ -38,8 +38,6 @@ public class GroundIntake extends SubsystemBase {
 
     //delcaring & resetting intake slap down encoder
     intakeEncoder = intakeMotor.getEncoder();
-    intakeEncoder.setPosition(0);
-
 
     //configuring the motors
     intakeMotor.restoreFactoryDefaults();
@@ -95,6 +93,10 @@ public class GroundIntake extends SubsystemBase {
   public double getPos()
   {
     return intakeEncoder.getPosition();
+  }
+  public void setZero()
+  {
+    intakeEncoder.setPosition(0);
   }
 
   @Override

@@ -58,7 +58,6 @@ public class DeployIntake extends Command {
             {
 
                 SmartDashboard.putBoolean("deploy done", true);
-                intake.setRollers(0);
                 intake.toSetPoint(0);
                 shooter.runFeederWheels(0);
                 shooter.runFlyWheels(0);

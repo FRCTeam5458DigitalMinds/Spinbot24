@@ -20,7 +20,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.2
+            "waitTime": 0.3
           }
         },
         {
@@ -32,25 +32,55 @@
         {
           "type": "path",
           "data": {
-            "pathName": "3Note CenterA"
+            "pathName": "REDT 3Note CenterA"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "3Note CenterB"
+            "pathName": "REDT 3Note CenterB"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "FarShootB"
+            "name": "FarShootC"
           }
         },
         {
           "type": "wait",
           "data": {
             "waitTime": 0.3
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootFinish"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3Note CenterC"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3Note CenterD"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FarShootC"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
           }
         },
         {

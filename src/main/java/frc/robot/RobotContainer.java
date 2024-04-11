@@ -91,8 +91,11 @@ public class RobotContainer {
 
     //named commands for autos, make sure the name aligns with pathplanner named command
     NamedCommands.registerCommand("FarShoot", new ClosedShoot(m_Shooter, m_GroundIntake, m_Climber, m_Limelight));
-    NamedCommands.registerCommand("FarShootB", new AutoShoot(m_Shooter, m_GroundIntake, m_Climber, m_Limelight));
-
+    NamedCommands.registerCommand("FarShootB", new AutoShoot(m_Shooter, m_GroundIntake, m_Climber, m_Limelight, 4));
+    NamedCommands.registerCommand("4Note A", new AutoShoot(m_Shooter, m_GroundIntake, m_Climber, m_Limelight, 1));
+    NamedCommands.registerCommand("4Note B", new AutoShoot(m_Shooter, m_GroundIntake, m_Climber, m_Limelight, 2));
+    NamedCommands.registerCommand("4Note C", new AutoShoot(m_Shooter, m_GroundIntake, m_Climber, m_Limelight, 3));
+    NamedCommands.registerCommand("FarShootC", new AutoShoot(m_Shooter, m_GroundIntake, m_Climber, m_Limelight, -1));
     NamedCommands.registerCommand("SubShoot", new OpenShoot(m_Shooter, m_GroundIntake));
   
 
@@ -112,7 +115,6 @@ public class RobotContainer {
     //displaying choosers on smart dash
     SmartDashboard.putData("Side", m_side_chooser);
     SmartDashboard.putData("Auto Mode", m_auto_chooser);
-
     //swerve command to drive during tele-op
     m_SwerveSubsystem.setDefaultCommand(
       new TeleopSwerve(
@@ -141,7 +143,8 @@ public class RobotContainer {
     m_DriveController.button(Button.kStart.value).onTrue(new ChangeOffset(1));
     m_DriveController.button(Button.kRightStick.value).onTrue(new ChangeOffset(2));
 
-    m_DriveController.button(Button.kLeftStick.value).onTrue(new ZeroShooter(m_Shooter));
+    m_DriveController.button(Button.kLeftStick.value).onTrue(new ZeroShooter(m_Shooter, m_GroundIntake));
+
     m_DriveController.button(Button.kY.value).onTrue(new InstantCommand(() -> m_SwerveSubsystem.zeroGyro()));
     
     m_DriveController.povDown().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 0));
@@ -159,7 +162,6 @@ public class RobotContainer {
     m_DriveController.button(Button.kRightBumper.value).onFalse(new FinishShoot(m_Shooter, m_GroundIntake, m_Climber));
     m_DriveController.axisGreaterThan(3, 0).onTrue(new OpenShoot( m_Shooter, m_GroundIntake));
     m_DriveController.axisGreaterThan(3, 0).onFalse(new FinishShoot(m_Shooter, m_GroundIntake, m_Climber));
-
     
     m_DriveController.axisGreaterThan(2, 0.05).onTrue(new DeployIntake(m_GroundIntake, m_Shooter, m_Climber).until(m_DriveController.axisLessThan(2, 0.02)));
     m_DriveController.axisGreaterThan(2, 0.02).onFalse(new RetractIntake(m_GroundIntake, m_Shooter, m_Climber));
