@@ -29,6 +29,10 @@ public class Shooter extends SubsystemBase{
   /** Creates a new ExampleSubsyste m. */
     public Shooter() {
       TalonFXConfiguration cfg = new TalonFXConfiguration();
+      CurrentLimitsConfigs curconfig = cfg.CurrentLimits;
+      curconfig.StatorCurrentLimit = 40;
+      curconfig.StatorCurrentLimitEnable = true;
+
       TalonFXConfiguration feed_cur = new TalonFXConfiguration();
 
       MotionMagicConfigs mm = cfg.MotionMagic;
@@ -36,11 +40,10 @@ public class Shooter extends SubsystemBase{
 
       TalonFXConfiguration fig = new TalonFXConfiguration();
       CurrentLimitsConfigs currentconfig = fig.CurrentLimits;
-      CurrentLimitsConfigs curconfig = cfg.CurrentLimits;
+      
       CurrentLimitsConfigs feederconfig = feed_cur.CurrentLimits;
 
-      curconfig.StatorCurrentLimit = 40;
-      curconfig.StatorCurrentLimitEnable = true;
+     
 
       feederconfig.StatorCurrentLimit = 55;
       feederconfig.StatorCurrentLimitEnable = true;
@@ -168,22 +171,15 @@ public class Shooter extends SubsystemBase{
     {
       return shooterMotor.getPosition().getValueAsDouble();
     }
+    
     public void runFlyWheels(double OutputPercent)
     {
       encoderPrint();
 
-      double difference = 0.05;
       SmartDashboard.putNumber("fly wheels", OutputPercent);
 
       OutputPercent /= 100.;
-      SmartDashboard.putString("DB/String 9", Double.toString(OutputPercent));
-      if (OutputPercent < 0)
-      {
-        difference = -difference;
-      } else if (OutputPercent == 0)
-      {
-        difference = 0;
-      }
+
       flyWheelOne.set(OutputPercent);
       flyWheelTwo.set(OutputPercent);
     }

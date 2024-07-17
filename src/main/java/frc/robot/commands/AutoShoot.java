@@ -54,120 +54,19 @@ public class AutoShoot extends Command
 
                 if (note == 3)
                 {
-                    degrees = 22.2;
+                    degrees = 23.2;
                 }
                 else if (note == -1)
                 {
-                    degrees = 23.2;
+                    degrees = 23.7;
+                }
+                else if (note == 2)
+                {
+                    degrees = 23;
                 }
                 else
                 {
-
-                    if (distance >= 0) 
-                    {
-                        if (distance > 0.7 && distance < 1.5)
-                        {
-                            if (distance > 0.7)
-                            {
-                                degrees = 12;
-                            } 
-                            if (distance > 0.8)
-                            {
-                                degrees = 15;
-                            }
-                            if (distance > 0.91)
-                            {
-                                degrees = 17;
-                            }
-                            if (distance > 0.98)
-                            {
-                                degrees = 19;
-                            }
-                            if (distance > 1.05)
-                            {
-                                degrees = 21;
-                            }
-                            if (distance > 1.15)
-                            {
-                                degrees = 23;
-                            }
-                            if (distance > 1.20)
-                            {
-                                degrees = 24;
-                            }
-                            if (distance > 1.24)
-                            {
-                                degrees = 25;
-                            }
-                            if (distance > 1.28)
-                            {
-                                degrees = 24;
-                            }
-                            if (distance > 1.33)
-                            {
-                                degrees = 26;
-                            }
-                            if (distance > 1.41)
-                            {
-                                degrees = 27;
-                            }
-
-                            if (note > 3)
-                            {   
-                                degrees -= 2;
-                            } 
-
-                            else
-                            {
-                                degrees += 1.3;
-
-                                if (note == 1)
-                                {
-                                    degrees += 0.8;
-                                } 
-                                else if (note == 2)
-                                {
-                                    degrees += 0.8;
-                                }
-                            }
-                        }
-                        else 
-                        {
-                        
-                            offset = SmartDashboard.getNumber("offset", 0.31);
-                            degrees = (distance - offset)*(1.5/.05);
-
-                
-                            if (distance > 1)
-                            {
-                            
-                                if (distance < 1.1 && distance > 1.0)
-                                {
-                                    degrees += 2.5;        
-                                }      
-                                if (distance > 1.2)
-                                {
-                                    degrees -= 0.5;        
-                                } 
-                                if (distance > 1.28)
-                                {
-                                    degrees -= 0.5;        
-                                } 
-                                if (distance > 1.3)
-                                {
-                                    degrees -= 0.5;        
-                                } 
-                                if (distance > 1.33)
-                                {
-                                    degrees -= .4;        
-                                }          
-                            }
-                            else
-                            {
-                                degrees += 1;
-                            } 
-                        }
-                    }
+                    degrees = 22.7;
                 }
 
                 if (degrees < 50 && degrees >= 0)
@@ -211,13 +110,12 @@ public class AutoShoot extends Command
                 {
                     if (shooter.getV() == 0)
                     {
-                        if (distance > -1 || note == 3 || note == -1)
-                        {
-                            shooter.runFeederWheels(85);
-                            intake.setRollers(-50);
-                            
-                            return true;
-                        } 
+
+                        shooter.runFeederWheels(85);
+                        intake.setRollers(-50);
+                        
+                        return true;
+                    
                     } 
                 }
             }

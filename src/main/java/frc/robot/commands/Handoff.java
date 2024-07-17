@@ -38,7 +38,6 @@ public class Handoff extends Command{
         }
       //  climber.toSetPoint(0);
  
-        
     }
 
     public void execute()

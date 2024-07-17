@@ -145,10 +145,18 @@ public class ClosedShoot extends Command
                         SmartDashboard.putNumber("degrees", degrees);
 
                         shooter.toCustomSetpoint(degrees);
-                        shooter.runFlyWheels(-95);
+                        shooter.runFlyWheels(-40);
                         shooter.runFeederWheels(0);
                     }
                 } 
+                else
+                {
+                    degrees = 18;
+                    shooter.toCustomSetpoint(degrees);
+                    shooter.runFlyWheels(-95);
+                    shooter.runFeederWheels(0);
+                    
+                }
             } 
             else if (climber.getStage() == 1)
             {
@@ -187,10 +195,12 @@ public class ClosedShoot extends Command
                             intake.setRollers(-50);
                             
                             return true;
-                        } 
-                        else
-                        {
-                        
+                        } else {
+                            if (timer.get() > 1) 
+                            {
+                                shooter.runFeederWheels(85);
+                                intake.setRollers(-50);
+                            }
                         }
                     } 
                 }

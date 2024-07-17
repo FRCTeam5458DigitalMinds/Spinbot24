@@ -14,7 +14,7 @@ public class GroundIntake extends SubsystemBase {
   //PID setpoints of ideal encoder values
   private double deployPosition = -36;
   private double climbingPosition = -13.104;
-  private double origin = 0;
+  private double origin = -0.2;
   private double ejectPosition = -27;
 
   private double[] m_setPoints = {origin, deployPosition, climbingPosition, ejectPosition};
@@ -25,10 +25,6 @@ public class GroundIntake extends SubsystemBase {
   
   private CANSparkMax intakeMotor;
   private CANSparkMax rollerMotor;
-
-
-
-
 
   public GroundIntake() {
 

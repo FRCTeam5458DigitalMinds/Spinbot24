@@ -215,7 +215,7 @@ public final class Constants {
     //targets the errors in positioning
     public static final double kP = 0.9;
     //targets the errors in velocity
-    public static final double kD = 0.9;
+    public static final double kD = 0.92;
 
     public static final double FF = 0.0009;
 
