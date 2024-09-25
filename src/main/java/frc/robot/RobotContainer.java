@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.TeleopSwerve;
+import frc.robot.commands.Toggle;
 import frc.robot.commands.ZeroShooter;
 import frc.robot.commands.DeployIntake;
 import frc.robot.commands.Eject;
@@ -42,7 +43,6 @@ public class RobotContainer {
   //declaring controllers
   //operator controller can be plugged in, but is not currently used
   private final CommandXboxController m_DriveController = new CommandXboxController(0);
-  private final CommandXboxController m_OperatorController = new CommandXboxController(1);
 
 
   //options for side sendable chooser
@@ -137,7 +137,6 @@ public class RobotContainer {
     //declaring controller button binds
     m_DriveController.button(Button.kX.value).whileTrue(new Handoff(m_Shooter, m_GroundIntake, m_Climber));
     m_DriveController.button(Button.kX.value).onFalse(new EndHandoff(m_Shooter, m_GroundIntake, m_Climber));
-    m_OperatorController.button(Button.kX.value).onTrue(new Handoff(m_Shooter, m_GroundIntake, m_Climber));
     
     m_DriveController.button(Button.kBack.value).onTrue(new ChangeOffset(-1));
     m_DriveController.button(Button.kStart.value).onTrue(new ChangeOffset(1));
@@ -151,12 +150,11 @@ public class RobotContainer {
     m_DriveController.povLeft().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 1));
     m_DriveController.povUp().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 2));
 
-    m_OperatorController.povDown().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 0));
-    m_OperatorController.povLeft().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 1));
-    m_OperatorController.povUp().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 2));
-    
     m_DriveController.button(Button.kB.value).onTrue(new Eject(m_GroundIntake, 0));
     m_DriveController.button(Button.kB.value).onFalse(new Eject(m_GroundIntake, 1));
+
+    m_DriveController.button(Button.kA.value).onTrue(new Toggle(2, m_Shooter));
+    m_DriveController.button(Button.kB.value).onTrue(new Toggle(1, m_Shooter));
 
     m_DriveController.button(Button.kRightBumper.value).onTrue(new ClosedShoot(m_Shooter, m_GroundIntake, m_Climber, m_Limelight));
     m_DriveController.button(Button.kRightBumper.value).onFalse(new FinishShoot(m_Shooter, m_GroundIntake, m_Climber));
