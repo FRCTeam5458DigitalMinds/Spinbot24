@@ -82,12 +82,12 @@ public final class Constants {
     public static final double angleConversionFactor = 360.0 / angleGearRatio;
 
     /* Swerve Profiling Values */
-    public static final double maxSpeed = 15.1; // meters per second
+    public static final double maxSpeed = 15; // meters per second
     public static final double automaxspeed = 4.5;
     public static final double autoacceleration = 3;
-    public static final double maxAngularVelocity = 15.7; //
+    public static final double maxAngularVelocity = 15; //
 
-    public static final double m_maxAngularVelocity = 6.283;
+    public static final double m_maxAngularVelocity = 15; // previous max 6.283
     public static final double m_maxAngularAcceleation = Math.pow(m_maxAngularVelocity, 1.5);
 
     /* Neutral Modes */
@@ -210,20 +210,20 @@ public final class Constants {
     //largely ignore the integral value as it can quickly cause problems
 
     //targets the errors over time
-    public static final double kI = 0.000075;
+    public static final double kI = 0.00000;
 
     //targets the errors in positioning
-    public static final double kP = 0.9;
+    public static final double kP = 0.0011;
     //targets the errors in velocity
-    public static final double kD = 0.92;
+    public static final double kD = 0.0005;
 
-    public static final double FF = 0.0009;
+    public static final double FF = 0.0021;
 
     public static final double max_vel = 1500;
     public static final double min_vel = 0;
-    public static final double max_accel = 1000;
+    public static final double max_accel = 750;
 
-    public static final double allowed_error = 0.23;
+    public static final double allowed_error = 0.15;
   }
   public static final class ShooterConstants {
     public static final int Shooter_ID = 12;

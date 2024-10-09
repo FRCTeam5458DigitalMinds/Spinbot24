@@ -150,8 +150,8 @@ public class RobotContainer {
     m_DriveController.povLeft().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 1));
     m_DriveController.povUp().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 2));
 
-    m_DriveController.button(Button.kB.value).onTrue(new Eject(m_GroundIntake, 0));
-    m_DriveController.button(Button.kB.value).onFalse(new Eject(m_GroundIntake, 1));
+   // m_DriveController.button(Button.kB.value).onTrue(new Eject(m_GroundIntake, 0));
+    //m_DriveController.button(Button.kB.value).onFalse(new Eject(m_GroundIntake, 1));
 
     m_DriveController.button(Button.kA.value).onTrue(new Toggle(2, m_Shooter));
     m_DriveController.button(Button.kB.value).onTrue(new Toggle(1, m_Shooter));
@@ -163,6 +163,7 @@ public class RobotContainer {
     
     m_DriveController.axisGreaterThan(2, 0.05).onTrue(new DeployIntake(m_GroundIntake, m_Shooter, m_Climber).until(m_DriveController.axisLessThan(2, 0.02)));
     m_DriveController.axisGreaterThan(2, 0.02).onFalse(new RetractIntake(m_GroundIntake, m_Shooter, m_Climber));
+    
   }
 
   //turns off robot LEDs
