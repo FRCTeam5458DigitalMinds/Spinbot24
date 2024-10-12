@@ -213,17 +213,17 @@ public final class Constants {
     public static final double kI = 0.00000;
 
     //targets the errors in positioning
-    public static final double kP = 0.0011;
+    public static final double kP = 0.0013; //.0013, .001
     //targets the errors in velocity
-    public static final double kD = 0.0005;
+    public static final double kD = 0.00015; //.001, .0053
 
-    public static final double FF = 0.0021;
+    public static final double FF = 0.0012; //.0018, .0026
 
-    public static final double max_vel = 1500;
+    public static final double max_vel = 1800;
     public static final double min_vel = 0;
-    public static final double max_accel = 750;
+    public static final double max_accel = 1000;
 
-    public static final double allowed_error = 0.15;
+    public static final double allowed_error = 0.03;
   }
   public static final class ShooterConstants {
     public static final int Shooter_ID = 12;
@@ -241,19 +241,19 @@ public final class Constants {
     public static final int climb_ID1 = 16;
     public static final int climb_ID2 = 17;
     //targets the errors over time
-    public static final double kI = 0.000;
+    public static final double kI = 0.0000;
 
     //targets the errors in positioning
-    public static final double kP = 0.0075;
+    public static final double kP = 0.0011;
     //targets the errors in velocity
-    public static final double kD = 0.0005;
+    public static final double kD = 0.0003;
 
-    public static final double FF = 0.0008;
+    public static final double FF = 0.0007;
 
     public static final double max_vel = 2000;
     public static final double min_vel = 0;
-    public static final double max_accel = 1500;
+    public static final double max_accel = 1000;
 
-    public static final double allowed_error = 0.015;
+    public static final double allowed_error = 0.05;
   }
 }
