@@ -150,11 +150,11 @@ public class RobotContainer {
     m_DriveController.povLeft().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 1));
     m_DriveController.povUp().onTrue(new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 2));
 
-   // m_DriveController.button(Button.kB.value).onTrue(new Eject(m_GroundIntake, 0));
-    //m_DriveController.button(Button.kB.value).onFalse(new Eject(m_GroundIntake, 1));
+    m_DriveController.button(Button.kB.value).onTrue(new Eject(m_GroundIntake, 0));
+    m_DriveController.button(Button.kB.value).onFalse(new Eject(m_GroundIntake, 1));
 
-    m_DriveController.button(Button.kA.value).onTrue(new Toggle(2, m_Shooter));
-    m_DriveController.button(Button.kB.value).onTrue(new Toggle(1, m_Shooter));
+    //m_DriveController.button(Button.kA.value).onTrue(new Toggle(2, m_Shooter));
+    //m_DriveController.button(Button.kB.value).onTrue(new Toggle(1, m_Shooter));
 
     m_DriveController.button(Button.kRightBumper.value).onTrue(new ClosedShoot(m_Shooter, m_GroundIntake, m_Climber, m_Limelight));
     m_DriveController.button(Button.kRightBumper.value).onFalse(new FinishShoot(m_Shooter, m_GroundIntake, m_Climber));

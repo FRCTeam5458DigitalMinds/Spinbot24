@@ -50,8 +50,9 @@ public class DeployIntake extends Command {
     {
        // SmartDashboard.putString("INTAKE STATE", "EXECUTING BEEP BEEP");
 
-        if (intake.voltageOutput() >= 37)
-        {
+       // if (intake.voltageOutput() >= 37)
+        //{
+            /* 
             shooter.toSetPoint(1);
 
             if (intake.getPos() < -10) 
@@ -66,8 +67,8 @@ public class DeployIntake extends Command {
             if(SmartDashboard.getBoolean("deploy done", false) == true)
             {
                 isFinished();
-            }
-        }
+            } */
+        //}
     }
 
     public boolean isFinished()

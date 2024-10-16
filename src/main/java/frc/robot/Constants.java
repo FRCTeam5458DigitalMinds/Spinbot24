@@ -110,7 +110,7 @@ public final class Constants {
       public static final int canCoderID = 34;
       public static final Rotation2d angleOffset = Rotation2d.fromRotations(0.846680);
     /* Angle Motor PID Values */
-      public static final double angleKP = 0.01; //to tune
+      public static final double angleKP = 0.02; //to tune
       public static final double angleKI = 0.0; //to tune
       public static final double angleKD = 0.0; //to tune
       public static final double angleKFF = 0.0; //to tune
@@ -127,7 +127,7 @@ public final class Constants {
       public static final int canCoderID = 32;
       public static final Rotation2d angleOffset =  Rotation2d.fromRotations(0.812012);
       /* Angle Motor PID Values */
-      public static final double angleKP = 0.01; //to tune
+      public static final double angleKP = 0.02; //to tune
       public static final double angleKI = 0.0; //to tune
       public static final double angleKD = 0.0; //to tune
       public static final double angleKFF = 0.0; //to tune
@@ -144,7 +144,7 @@ public final class Constants {
       public static final int canCoderID = 38;
       public static final Rotation2d angleOffset = Rotation2d.fromRotations(0.213379);
       /* Angle Motor PID Values */
-      public static final double angleKP = 0.01; //to tune
+      public static final double angleKP = 0.02; //to tune
       public static final double angleKI = 0.0; //to tune
       public static final double angleKD = 0.0; //to tune
       public static final double angleKFF = 0.0; //to tune
@@ -161,7 +161,7 @@ public final class Constants {
       public static final int canCoderID = 36;
       public static final Rotation2d angleOffset = Rotation2d.fromRotations(0.822754);
         /* Angle Motor PID Values */
-      public static final double angleKP = 0.01; //to tune
+      public static final double angleKP = 0.02; //to tune
       public static final double angleKI = 0.0; //to tune
       public static final double angleKD = 0.0; //to tune
       public static final double angleKFF = 0.0; //to tune
@@ -213,17 +213,17 @@ public final class Constants {
     public static final double kI = 0.00000;
 
     //targets the errors in positioning
-    public static final double kP = 0.0013; //.0013, .001
+    public static final double kP = 0.001; //.0013, 
     //targets the errors in velocity
-    public static final double kD = 0.00015; //.001, .0053
+    public static final double kD = 0.0002; //.0001,
 
-    public static final double FF = 0.0012; //.0018, .0026
+    public static final double FF = 0.0012; //.00125, 
 
-    public static final double max_vel = 1800;
+    public static final double max_vel = 1500;
     public static final double min_vel = 0;
-    public static final double max_accel = 1000;
+    public static final double max_accel = 750;
 
-    public static final double allowed_error = 0.03;
+    public static final double allowed_error = 0.07;
   }
   public static final class ShooterConstants {
     public static final int Shooter_ID = 12;
@@ -241,19 +241,19 @@ public final class Constants {
     public static final int climb_ID1 = 16;
     public static final int climb_ID2 = 17;
     //targets the errors over time
-    public static final double kI = 0.0000;
+    public static final double kI = 0.000000;
 
     //targets the errors in positioning
-    public static final double kP = 0.0011;
+    public static final double kP = 0.0012;
     //targets the errors in velocity
     public static final double kD = 0.0003;
 
-    public static final double FF = 0.0007;
+    public static final double FF = 0.001;
 
     public static final double max_vel = 2000;
     public static final double min_vel = 0;
     public static final double max_accel = 1000;
 
-    public static final double allowed_error = 0.05;
+    public static final double allowed_error = 0.035;
   }
 }
