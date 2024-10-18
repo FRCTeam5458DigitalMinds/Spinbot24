@@ -213,17 +213,17 @@ public final class Constants {
     public static final double kI = 0.00000;
 
     //targets the errors in positioning
-    public static final double kP = 0.001; //.0013, 
+    public static final double kP = 0.00125; //.0013, 0.0012
     //targets the errors in velocity
-    public static final double kD = 0.0002; //.0001,
+    public static final double kD = 0.00042; //.0001, .00001
 
-    public static final double FF = 0.0012; //.00125, 
+    public static final double FF = 0.001; //.00125, .0003
 
-    public static final double max_vel = 1500;
+    public static final double max_vel = 1650; //1600
     public static final double min_vel = 0;
-    public static final double max_accel = 750;
+    public static final double max_accel = 1000;
 
-    public static final double allowed_error = 0.07;
+    public static final double allowed_error = 0.0441;
   }
   public static final class ShooterConstants {
     public static final int Shooter_ID = 12;
@@ -244,16 +244,16 @@ public final class Constants {
     public static final double kI = 0.000000;
 
     //targets the errors in positioning
-    public static final double kP = 0.0012;
+    public static final double kP = 0.001; //0.00115
     //targets the errors in velocity
-    public static final double kD = 0.0003;
+    public static final double kD = 0.00032;  //0.00023
 
-    public static final double FF = 0.001;
+    public static final double FF = 0.0009;  //0.0005
 
-    public static final double max_vel = 2000;
+    public static final double max_vel = 1750;
     public static final double min_vel = 0;
     public static final double max_accel = 1000;
 
-    public static final double allowed_error = 0.035;
+    public static final double allowed_error = 0.0441;
   }
 }

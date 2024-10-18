@@ -29,6 +29,7 @@ public class MoveClimber extends Command {
     public void initialize()
     {
         SmartDashboard.putString("elevator inches", Double.toString(elevator.getInches()));
+        
         if (setPoint == 0) 
         //down
         {

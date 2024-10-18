@@ -39,7 +39,7 @@ public class Climber extends SubsystemBase {
 
 
     climbController = climbMotor_1.getPIDController();
-
+    
     climbController.setP(Constants.ClimbConstants.kP);
     climbController.setI(Constants.ClimbConstants.kI);
     climbController.setD(Constants.ClimbConstants.kD);
