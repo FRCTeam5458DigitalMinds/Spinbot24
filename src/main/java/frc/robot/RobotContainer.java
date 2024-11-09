@@ -22,6 +22,8 @@ import frc.robot.commands.MoveClimber;
 import frc.robot.commands.OpenShoot;
 import frc.robot.commands.RetractIntake;
 import frc.robot.commands.AutoDeployIntake;
+import frc.robot.commands.AutoFinishShoot;
+import frc.robot.commands.AutoRetractIntake;
 import frc.robot.commands.AutoShoot;
 import frc.robot.commands.ChangeOffset;
 import frc.robot.commands.ClosedShoot;
@@ -99,8 +101,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("SubShoot", new OpenShoot(m_Shooter, m_GroundIntake));
   
 
-    NamedCommands.registerCommand("ShootFinish", new FinishShoot(m_Shooter, m_GroundIntake, m_Climber));
-    NamedCommands.registerCommand("StopIntake", new RetractIntake(m_GroundIntake, m_Shooter, m_Climber));
+    NamedCommands.registerCommand("ShootFinish", new AutoFinishShoot(m_Shooter, m_GroundIntake, m_Climber));
+    NamedCommands.registerCommand("StopIntake", new AutoRetractIntake(m_GroundIntake, m_Shooter, m_Climber));
     NamedCommands.registerCommand("Intake", new AutoDeployIntake(m_GroundIntake, m_Shooter, m_Climber));
     NamedCommands.registerCommand("RaiseElevator", new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 1));
     NamedCommands.registerCommand("LowerElevator", new MoveClimber(m_GroundIntake, m_Shooter, m_Climber, 0));

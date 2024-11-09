@@ -7,13 +7,13 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class RetractIntake extends Command {
+public class AutoRetractIntake extends Command {
     GroundIntake intake;
     Shooter shooter;
     Climber elevator;
     Timer timer = new Timer();
 
-    public RetractIntake(GroundIntake Intake, Shooter m_Shooter, Climber Elevator) 
+    public AutoRetractIntake(GroundIntake Intake, Shooter m_Shooter, Climber Elevator) 
     {
         this.intake = Intake;
         this.shooter = m_Shooter;
@@ -27,10 +27,9 @@ public class RetractIntake extends Command {
     public void initialize() {
         //ADD OR STATEMENT FOR FLIGHT SENSOR
         intake.toSetPoint(0);
-        intake.setRollers(65);
+        intake.setRollers(40);
       //  elevator.toSetPoint(0)
         shooter.runFeederWheels(0);
-        shooter.runFlyWheels(0);
 
         timer.restart();
     }
@@ -45,14 +44,14 @@ public class RetractIntake extends Command {
         SmartDashboard.putNumber("timer", timer.get());
         SmartDashboard.putNumber("intake V", intake.getPos());
 
-        if (intake.getPos() > -8) 
+        if (intake.getPos() > -20) 
         {
             intake.setRollers(0);
         }
 
         if (intake.getPos() > -8)
         {
-            shooter.toSetPoint(0);
+           // shooter.toSetPoint(0);
             
 
             return true;

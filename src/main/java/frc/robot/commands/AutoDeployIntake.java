@@ -28,10 +28,9 @@ public class AutoDeployIntake extends Command {
 
         //deploys the intake and runs/stops the complementary motors
         shooter.runFeederWheels(0);
-        shooter.runFlyWheels(0);
         shooter.toSetPoint(1);
         
-        intake.setRollers(80);
+        intake.setRollers(40);
         intake.toSetPoint(1);
 
         

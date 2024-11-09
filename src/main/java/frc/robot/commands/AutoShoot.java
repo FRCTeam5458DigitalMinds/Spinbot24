@@ -54,7 +54,7 @@ public class AutoShoot extends Command
 
                 if (note == 3)
                 {
-                    degrees = 23.2;
+                    degrees = 27.25;
                 }
                 else if (note == -1)
                 {
@@ -62,11 +62,11 @@ public class AutoShoot extends Command
                 }
                 else if (note == 2)
                 {
-                    degrees = 23;
+                    degrees = 27.5;
                 }
                 else
                 {
-                    degrees = 22.7;
+                    degrees = 27.5;
                 }
 
                 if (degrees < 50 && degrees >= 0)
@@ -74,7 +74,7 @@ public class AutoShoot extends Command
                     SmartDashboard.putNumber("degrees", degrees);
 
                     shooter.toCustomSetpoint(degrees);
-                    shooter.runFlyWheels(-95);
+                    shooter.runFlyWheels(-100);
                     shooter.runFeederWheels(0);
                 }
                     

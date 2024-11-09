@@ -161,7 +161,7 @@ public class ClosedShoot extends Command
             else if (climber.getStage() == 1)
             {
                 intake.setRollers(0);
-                shooter.runFlyWheels(-95);
+                shooter.runFlyWheels(-100);
                 shooter.runFeederWheels(85);
             }
             else 
